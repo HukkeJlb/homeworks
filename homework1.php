@@ -80,9 +80,21 @@ echo "===================<br>Car Opel<br>$opel[model] $opel[speed] $opel[doors] 
 // =====================================================================
 echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
 echo "<table><tr>";
+for ($c = 0; $c <= 10; $c++) {
+    echo "<td>$c</td>";
+};
+echo "<tr>";
 for ($a = 1; $a <= 10; $a++) {
-    for ($b = 1; $b <= 10; $b++)
-        echo "<td>" . ($a * $b) . "</td>";
+    echo "<td>$a</td>";
+    for ($b = 1; $b <= 10; $b++) {
+        if ($a % 2 == 0 && $b % 2 == 0) {
+            echo "<td>(" . $a * $b . ")</td>";
+        } elseif ($a % 2 != 0 && $b % 2 != 0) {
+            echo "<td>[" . $a * $b . "]</td>";
+        } else {
+            echo "<td>" . $a * $b . "</td>";
+        };
+    }
     if ($a != 10) {
         echo "</tr>";
     };
