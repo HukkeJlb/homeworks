@@ -74,6 +74,17 @@ $opel = [
 $car = [$bmw, $toyota, $opel];
 echo "Объединение 3ёх массивов в многомерный:<pre>";
 print_r($car);
-echo "===================<pre>Car BMW<br>$bmw[model] $bmw[speed] $bmw[doors] $bmw[year]<br>";
-echo "===================<pre>Car Toyota<br>$toyota[model] $toyota[speed] $toyota[doors] $toyota[year]<br>";
-echo "===================<pre>Car Opel<br>$opel[model] $opel[speed] $opel[doors] $opel[year]<br>";
+echo "===================<br>Car BMW<br>$bmw[model] $bmw[speed] $bmw[doors] $bmw[year]<br>";
+echo "===================<br>Car Toyota<br>$toyota[model] $toyota[speed] $toyota[doors] $toyota[year]<br>";
+echo "===================<br>Car Opel<br>$opel[model] $opel[speed] $opel[doors] $opel[year]<br>";
+// =====================================================================
+echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
+echo "<table><tr>";
+for ($a = 1; $a <= 10; $a++) {
+    for ($b = 1; $b <= 10; $b++)
+        echo "<td>" . ($a * $b) . "</td>";
+    if ($a != 10) {
+        echo "</tr>";
+    };
+};
+echo "</table>";
