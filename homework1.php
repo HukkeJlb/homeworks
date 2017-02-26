@@ -78,8 +78,8 @@ echo "===================<br>Car BMW<br>$bmw[model] $bmw[speed] $bmw[doors] $bmw
 echo "===================<br>Car Toyota<br>$toyota[model] $toyota[speed] $toyota[doors] $toyota[year]<br>";
 echo "===================<br>Car Opel<br>$opel[model] $opel[speed] $opel[doors] $opel[year]<br>";
 // =====================================================================
-echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
-echo "<table><tr>";
+echo "<h1>EXERCISE №7<br>_________________________<br></h1>";
+echo "<table border=\"2\"><tr>";
 for ($c = 0; $c <= 10; $c++) {
     echo "<td>$c</td>";
 };
