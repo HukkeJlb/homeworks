@@ -71,12 +71,20 @@ $opel = [
     'doors' => '5',
     'year' => '2016',
 ];
-$car = [$bmw, $toyota, $opel];
+$car = [
+    'BMW' => $bmw,
+    'Toyota'  => $toyota,
+    'Opel' => $opel
+];
 echo "Объединение 3ёх массивов в многомерный:<pre>";
 print_r($car);
-echo "===================<br>Car BMW<br>$bmw[model] $bmw[speed] $bmw[doors] $bmw[year]<br>";
-echo "===================<br>Car Toyota<br>$toyota[model] $toyota[speed] $toyota[doors] $toyota[year]<br>";
-echo "===================<br>Car Opel<br>$opel[model] $opel[speed] $opel[doors] $opel[year]<br>";
+foreach ($car as $carName => $value) {
+    echo "CAR $carName <br>";
+    echo $value['model'] . ' ';
+    echo $value['speed'] . ' ';
+    echo $value['doors'] . ' ';
+    echo $value['year'] . "<br>";
+};
 // =====================================================================
 echo "<h1>EXERCISE №7<br>_________________________<br></h1>";
 echo "<table border=\"2\"><tr>";
