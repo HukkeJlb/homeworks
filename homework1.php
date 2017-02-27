@@ -100,3 +100,18 @@ for ($a = 1; $a <= 10; $a++) {
     };
 };
 echo "</table>";
+// =====================================================================
+echo "<h1>EXERCISE №8<br>_________________________<br></h1>";
+$str = 'лина джаггернаут тайдхантер лич войд дарксир';
+echo $str . "<br>";
+$array = explode(' ', $str);
+print_r($array);
+echo "<br>";
+$newArray = array_reverse($array);
+print_r($newArray);
+$i = 0;
+while ($i < count($newArray)) {
+    $newLine = implode('-', $newArray);
+    $i++;
+};
+echo $newLine;
