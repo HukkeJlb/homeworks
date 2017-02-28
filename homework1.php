@@ -19,7 +19,7 @@ if (defined('CONST123')) {
     echo "Проверка на наличие константы - она существует<br>";
 }
 echo CONST123 . "<br>";
-define(CONST123, 'Новое значение');
+define("CONST123", 'Новое значение');
 echo CONST123 . "<br>";
 // =====================================================================
 echo "<h2>EXERCISE №4<br>_________________________<br></h2>";
@@ -83,10 +83,10 @@ foreach ($car as $carName => $value) {
     echo $value['model'] . ' ';
     echo $value['speed'] . ' ';
     echo $value['doors'] . ' ';
-    echo $value['year'] . "<br>";
+    echo $value['year'] . "<br></pre>";
 };
 // =====================================================================
-echo "<h1>EXERCISE №7<br>_________________________<br></h1>";
+echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
 echo "<table border=\"2\"><tr>";
 for ($c = 0; $c <= 10; $c++) {
     echo "<td>$c</td>";
@@ -109,17 +109,17 @@ for ($a = 1; $a <= 10; $a++) {
 };
 echo "</table>";
 // =====================================================================
-echo "<h1>EXERCISE №8<br>_________________________<br></h1>";
+echo "<h2>EXERCISE №8<br>_________________________<br></h2>";
 $str = 'лина джаггернаут тайдхантер лич войд дарксир';
-echo $str . "<br>";
+echo $str . "<br><pre>";
 $array = explode(' ', $str);
 print_r($array);
 echo "<br>";
-$newArray = array_reverse($array);
-print_r($newArray);
 $i = 0;
-while ($i < count($newArray)) {
-    $newLine = implode('-', $newArray);
+while ($i < count($array)) {
+    $newArray[]= $array[count($array)-1 - $i];
     $i++;
 };
+print_r($newArray);
+$newLine = implode('-', $newArray);
 echo $newLine;
