@@ -7,10 +7,11 @@ $array1 = [
     3 => "Newbee, Wings, VG.J"
 ];
 function cool_func($array, $case = null) {
-    foreach ($array as $key => $value) {
-        if ($case == true) {
-            echo "$value". ', ';
-        } else {
+    if ($case == true) {
+        $resFunction = implode(', ', $array);
+        return $resFunction;
+    } else {
+        foreach ($array as $key => $value) {
             echo "<p>" . $value . "</p>";
         };
     };
@@ -18,5 +19,6 @@ function cool_func($array, $case = null) {
 
 cool_func($array1);
 echo "<br>===========================================================================<br>";
-cool_func($array1, true);
+$asd = cool_func($array1, true);
+echo "$asd";
 
