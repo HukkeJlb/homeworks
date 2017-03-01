@@ -6,9 +6,17 @@ $array1 = [
     2 => "Digital Chaos, Evil Geniuses, Team NP",
     3 => "Newbee, Wings, VG.J"
 ];
-function cool_func($array) {
+function cool_func($array, $case = null) {
     foreach ($array as $key => $value) {
-        echo "<p>" . $value . "</p>";
+        if ($case == true) {
+            echo "$value". ', ';
+        } else {
+            echo "<p>" . $value . "</p>";
+        };
     };
 };
+
 cool_func($array1);
+echo "<br>===========================================================================<br>";
+cool_func($array1, true);
+
