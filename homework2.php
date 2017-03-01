@@ -7,8 +7,8 @@ $array1 = [
     3 => "Newbee, Wings, VG.J"
 ];
 function cool_func($array) {
-    for ($i = 0; $i < count($array); $i++);
-        $line = $array[$i];
-        echo "<p>$line</p>";
-}
+    foreach ($array as $key => $value) {
+        echo "<p>" . $value . "</p>";
+    };
+};
 cool_func($array1);
