@@ -85,9 +85,24 @@ function operation($data, $operation)
 
 //===============================================================================
 echo "<h2>EXERCISE №3<br>_________________________<br></h2>";
-calcEverything('*', 5, 3, 1.5);
+calcEverything('+', 2, 3, 1.5, 4.5, 5);
 function calcEverything()
 {
+    function output($fullArr, $spliceArr, $result)
+    {
+        $output = '';
+        for ($a = 0; $a < count($spliceArr); $a++) {
+            $q = "$spliceArr[$a]";
+            $w = "$fullArr[0]";
+            if ($a == (count($spliceArr) - 1)) {
+                $output = $output . $q;
+            } else {
+                $output = $output . $q . $w;
+            }
+        }
+        echo "$output=$result";
+    }
+
     $argArray = func_get_args();
     $arr = array_splice($argArray, 1);
     foreach ($arr as $value) {
@@ -102,34 +117,14 @@ function calcEverything()
             for ($i = 0; $i <= count($arr); $i++) {
                 $rez = $rez + $arr[$i];
             }
-            $output = '';
-            for ($a = 0; $a < count($arr); $a++){
-                $q = "$arr[$a]";
-                $w = "$argArray[0]";
-                if ($a == (count($arr)-1)){
-                    $output =$output.$q;
-                } else {
-                    $output = $output.$q.$w;
-                }
-            }
-            echo "$output=$rez";
+            output($argArray, $arr, $rez);
             break;
         case '-':
             $rez = $arr[0];
             for ($i = 0; $i <= count($arr); $i++) {
                 $rez = $rez - $arr[$i + 1];
             }
-            $output = '';
-            for ($a = 0; $a < count($arr); $a++){
-                $q = "$arr[$a]";
-                $w = "$argArray[0]";
-                if ($a == (count($arr)-1)){
-                    $output =$output.$q;
-                } else {
-                    $output = $output.$q.$w;
-                }
-            }
-            echo "$output=$rez";
+            output($argArray, $arr, $rez);
             break;
         case '/':
             $rez = $arr[0];
@@ -140,51 +135,21 @@ function calcEverything()
                     return;
                 }
             }
-            $output = '';
-            for ($a = 0; $a < count($arr); $a++){
-                $q = "$arr[$a]";
-                $w = "$argArray[0]";
-                if ($a == (count($arr)-1)){
-                    $output =$output.$q;
-                } else {
-                    $output = $output.$q.$w;
-                }
-            }
-            echo "$output=$rez";
+            output($argArray, $arr, $rez);
             break;
         case '*':
             $rez = 1;
             for ($i = 0; $i < count($arr); $i++) {
                 $rez = $rez * $arr[$i];
             }
-            $output = '';
-            for ($a = 0; $a < count($arr); $a++){
-                $q = "$arr[$a]";
-                $w = "$argArray[0]";
-                if ($a == (count($arr)-1)){
-                    $output =$output.$q;
-                } else {
-                    $output = $output.$q.$w;
-                }
-            }
-            echo "$output=$rez";
+            output($argArray, $arr, $rez);
             break;
         case '**':
             $rez = $arr[0];
             for ($i = 0; $i < (count($arr) - 1); $i++) {
                 $rez = pow($rez, $arr[$i + 1]);
             }
-            $output = '';
-            for ($a = 0; $a < count($arr); $a++){
-                $q = "$arr[$a]";
-                $w = "$argArray[0]";
-                if ($a == (count($arr)-1)){
-                    $output =$output.$q;
-                } else {
-                    $output = $output.$q.$w;
-                }
-            }
-            echo "$output=$rez";
+            output($argArray, $arr, $rez);
             break;
         default:
             echo 'Первый аргумент должен содержать корректный арифметический оператор<br>';
