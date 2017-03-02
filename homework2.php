@@ -25,7 +25,7 @@ $asd = cool_func($array1, true);
 echo "$asd";
 //===============================================================================
 echo "<h2>EXERCISE №2<br>_________________________<br></h2>";
-operation([3, 2, 0], '/');
+operation([3, 2, 1], '/');
 function operation($data, $operation)
 {
     if (!is_array($data)) {
@@ -153,5 +153,25 @@ function calcEverything()
             break;
         default:
             echo 'Первый аргумент должен содержать корректный арифметический оператор<br>';
+    }
+}
+//===============================================================================
+echo "<h2>EXERCISE №4<br>_________________________<br></h2>";
+table(4,7);
+function table($firstNumber, $secondNumber) {
+    if ((!is_int($firstNumber)) || (!is_int($secondNumber))) {
+        echo "Введите ЦЕЛЫЕ числа";
+        return;
+    } else {
+        echo "<table><tr>";
+        for ($a = 1; $a <= $firstNumber; $a++) {
+            for ($b = 1; $b <= $secondNumber; $b++) {
+                echo "<td>" . $a * $b . "</td>";
+            }
+            if ($a != $firstNumber) {
+                echo "</tr>";
+            };
+        };
+        echo "</table>";
     }
 }
