@@ -25,7 +25,7 @@ $asd = cool_func($array1, true);
 echo "$asd";
 //===============================================================================
 echo "<h2>EXERCISE №2<br>_________________________<br></h2>";
-operation([3, 2, 1], '/');
+operation([2, 4, 7], '/');
 function operation($data, $operation)
 {
     if (!is_array($data)) {
@@ -34,7 +34,7 @@ function operation($data, $operation)
     }
     foreach ($data as $value) {
         if (!is_int($value)) {
-            echo 'Некоректный массив! Введите только числа!<br>';
+            echo 'Некорректный массив! Введите только числа!<br>';
             return;
         }
     }
@@ -155,10 +155,12 @@ function calcEverything()
             echo 'Первый аргумент должен содержать корректный арифметический оператор<br>';
     }
 }
+
 //===============================================================================
 echo "<h2>EXERCISE №4<br>_________________________<br></h2>";
-table(4,7);
-function table($firstNumber, $secondNumber) {
+table(4, 7);
+function table($firstNumber, $secondNumber)
+{
     if ((!is_int($firstNumber)) || (!is_int($secondNumber))) {
         echo "Введите ЦЕЛЫЕ числа";
         return;
@@ -174,4 +176,32 @@ function table($firstNumber, $secondNumber) {
         };
         echo "</table>";
     }
+}
+
+//===============================================================================
+echo "<h2>EXERCISE №5<br>_________________________<br></h2>";
+$palindrom = is_palindrom('anna');
+echo "$palindrom";
+function is_palindrom($string)
+{
+    $revString = '';
+    for ($i = 0; $i < mb_strlen($string); $i++) {
+        $revString = $revString.$string[mb_strlen($string) - 1 - $i];
+    }
+    if ($string == $revString) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    function newOutput($result)
+    {
+        if ($result){
+            $message = "Введённая строка является палиндромом";
+        } else {
+            $message = "Введённая строка не палиндром";
+        }
+        return $message;
+    }
+    $message = newOutput($result);
+    return $message;
 }
