@@ -205,3 +205,22 @@ function is_palindrom($string)
     $message = newOutput($result);
     return $message;
 }
+//===============================================================================
+echo "<h2>EXERCISE №6<br>_________________________<br></h2>";
+$currentTime = date("d.m.Y H:i");
+echo "Текущее время: $currentTime<br>=======================================<br>";
+$unixTime = mktime(0, 0, 0, 2, 24, 2016);
+echo 'Дата/время: '.date('d.m.Y H:i', $unixTime).'<br>';
+echo "Преобразовано в UNIX-формат: $unixTime<br>";
+//===============================================================================
+echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
+$line1 = 'Карл у Клары украл Кораллы';
+echo "Дана строка: \"$line1\". Убираем заглавные буквы \"K\".<br>";
+$pattern = "|К|";
+$line2 = preg_replace($pattern, '', $line1);
+echo "Результат: $line2<br>====================================<br>";
+$line1 = 'Две бутылки лимонада';
+echo "Дана строка: \"$line1\". Заменяем \"Две\" на \"Три\".<br>";
+$pattern = "|Две|";
+$line2 = preg_replace($pattern, 'Три', $line1);
+echo "Результат: $line2<br>";
