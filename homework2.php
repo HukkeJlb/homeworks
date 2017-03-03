@@ -214,16 +214,18 @@ echo 'Дата/время: '.date('d.m.Y H:i', $unixTime).'<br>';
 echo "Преобразовано в UNIX-формат: $unixTime<br>";
 //===============================================================================
 echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
-function find_replace($line, $pattern, $text)
+function find_replace($line, $pattern, $changeTo, $text)
 {
     echo "Дана строка: \"$line\". $text<br>";
-    $newLine = preg_replace($pattern, '', $line);
+    $newLine = preg_replace($pattern, $changeTo, $line);
     echo "Результат: $newLine<br>";
 }
 $line1 = 'Карл у Клары украл Кораллы';
 $pattern1 = "|К|";
+$сhangeTo1 = '';
 $line2 = 'Две бутылки лимонада';
 $pattern2 = "|Две|";
-find_replace($line1, $pattern1, 'Убираем заглавные буквы "K"');
+$сhangeTo2 = 'Три';
+find_replace($line1, $pattern1, $сhangeTo1, 'Убираем заглавные буквы "K"');
 echo "===============================<br>";
-find_replace($line2, $pattern2, 'Заменяем "Две" на "Три"');
+find_replace($line2, $pattern2, $сhangeTo2, 'Заменяем "Две" на "Три"');
