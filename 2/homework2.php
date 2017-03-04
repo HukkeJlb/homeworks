@@ -248,7 +248,7 @@ function packages($sample)
   '''::,   ::  ::  ::  `::   ::  ;:   .::    :   ::  :          :  ::
 ,:';  ::;  ::  ::  ::   ::   ::  ::,::''.    .    :: `:.      .:' ::
 `:,,,,;;' ,;; ,;;, ;;, ,;;, ,;;, `:,,,,:'   :;:    `;..``::::''..;'
-                                                     ``::,,,,::''";
+                                                     ``::,,,,::''</pre>";
     }
     if (preg_match($regular2, $sample)){
         smile();
@@ -261,3 +261,16 @@ function packages($sample)
 }
 //===============================================================================
 echo "<h2>EXERCISE №9<br>_________________________<br></h2>";
+get_text ('./test.txt');
+function get_text($fileName){
+    $text = file_get_contents($fileName);
+    echo "$text";
+}
+//===============================================================================
+echo "<h2>EXERCISE №10<br>_________________________<br></h2>";
+newFile('./anothertest.txt');
+function newFile($fileName)
+{
+    file_put_contents($fileName, 'Hello again!');
+    echo "В файл \"$fileName\" внесены изменения";
+}
