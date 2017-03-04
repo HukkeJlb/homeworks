@@ -273,4 +273,4 @@ function newFile($fileName)
 {
     file_put_contents($fileName, 'Hello again!');
     echo "В файл \"$fileName\" внесены изменения";
-}
+} 
