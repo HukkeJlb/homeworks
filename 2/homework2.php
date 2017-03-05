@@ -180,37 +180,36 @@ function table($firstNumber, $secondNumber)
 
 //===============================================================================
 echo "<h2>EXERCISE №5<br>_________________________<br></h2>";
-$palindrom = is_palindrom('anna');
-echo "$palindrom";
+$is_palindrom = 'racecar';
+newOutput(is_palindrom($is_palindrom));
+function newOutput($input)
+{
+    if ($input) {
+        echo "Введённая строка является палиндромом";
+    } else {
+        echo "Введённая строка не палиндром";
+    }
+}
 function is_palindrom($string)
 {
     $revString = '';
     for ($i = 0; $i < mb_strlen($string); $i++) {
-        $revString = $revString.$string[mb_strlen($string) - 1 - $i];
+        $revString = $revString . $string[mb_strlen($string) - 1 - $i];
     }
     if ($string == $revString) {
         $result = true;
     } else {
         $result = false;
     }
-    function newOutput($result)
-    {
-        if ($result){
-            $message = "Введённая строка является палиндромом";
-        } else {
-            $message = "Введённая строка не палиндром";
-        }
-        return $message;
-    }
-    $message = newOutput($result);
-    return $message;
+    return $result;
 }
+
 //===============================================================================
 echo "<h2>EXERCISE №6<br>_________________________<br></h2>";
 $currentTime = date("d.m.Y H:i");
 echo "Текущее время: $currentTime<br>=======================================<br>";
 $unixTime = mktime(0, 0, 0, 2, 24, 2016);
-echo 'Дата/время: '.date('d.m.Y H:i', $unixTime).'<br>';
+echo 'Дата/время: ' . date('d.m.Y H:i', $unixTime) . '<br>';
 echo "Преобразовано в UNIX-формат: $unixTime<br>";
 //===============================================================================
 echo "<h2>EXERCISE №7<br>_________________________<br></h2>";
@@ -220,6 +219,7 @@ function find_replace($line, $pattern, $changeTo, $text)
     $newLine = preg_replace($pattern, $changeTo, $line);
     echo "Результат: $newLine<br>";
 }
+
 $line1 = 'Карл у Клары украл Кораллы';
 $pattern1 = "|К|";
 $сhangeTo1 = '';
@@ -250,22 +250,25 @@ function packages($sample)
 `:,,,,;;' ,;; ,;;, ;;, ,;;, ,;;, `:,,,,:'   :;:    `;..``::::''..;'
                                                      ``::,,,,::''</pre>";
     }
-    if (preg_match($regular2, $sample)){
+
+    if (preg_match($regular2, $sample)) {
         smile();
-    }
-    elseif (preg_match($regular1, $sample, $match) && ($match[0]>1000)) {
+    } elseif (preg_match($regular1, $sample, $match) && ($match[0] > 1000)) {
         echo "Сеть есть";
     } else {
         echo "ERROR";
     }
 }
+
 //===============================================================================
 echo "<h2>EXERCISE №9<br>_________________________<br></h2>";
-get_text ('./test.txt');
-function get_text($fileName){
+get_text('./test.txt');
+function get_text($fileName)
+{
     $text = file_get_contents($fileName);
     echo "$text";
 }
+
 //===============================================================================
 echo "<h2>EXERCISE №10<br>_________________________<br></h2>";
 newFile('./anothertest.txt');
@@ -273,4 +276,4 @@ function newFile($fileName)
 {
     file_put_contents($fileName, 'Hello again!');
     echo "В файл \"$fileName\" внесены изменения";
-} 
+}
