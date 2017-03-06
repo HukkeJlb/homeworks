@@ -24,7 +24,7 @@ $asd = cool_func($array1, true);
 echo "$asd";
 //===============================================================================
 echo "<h2>EXERCISE №2<br>_________________________<br></h2>";
-operation([2, 4, 7], '/');
+operation([15, 2, 7], '-');
 function operation($data, $operation)
 {
     if (!is_array($data)) {
@@ -40,14 +40,14 @@ function operation($data, $operation)
     switch ($operation) {
         case "+" :
             $rez = 0;
-            for ($i = 0; $i <= count($data); $i++) {
+            for ($i = 0; $i < count($data); $i++) {
                 $rez = $rez + $data[$i];
             }
             echo "Результат вычислений = $rez";
             break;
         case "-" :
             $rez = $data[0];
-            for ($i = 0; $i <= count($data); $i++) {
+            for ($i = 0; $i + 1 < count($data); $i++) {
                 $rez = $rez - $data[$i + 1];
             }
             echo "Результат вычислений = $rez";
@@ -84,7 +84,7 @@ function operation($data, $operation)
 
 //===============================================================================
 echo "<h2>EXERCISE №3<br>_________________________<br></h2>";
-calcEverything('+', 2, 3, 1.5, 4.5, 5);
+calcEverything('-', 9, 2, 1);
 function calcEverything()
 {
     function output($fullArr, $spliceArr, $result)
@@ -113,15 +113,15 @@ function calcEverything()
     switch ($argArray[0]) {
         case '+':
             $rez = 0;
-            for ($i = 0; $i <= count($arr); $i++) {
+            for ($i = 0; $i < count($arr); $i++) {
                 $rez = $rez + $arr[$i];
             }
             output($argArray, $arr, $rez);
             break;
         case '-':
             $rez = $arr[0];
-            for ($i = 0; $i <= count($arr); $i++) {
-                $rez = $rez - $arr[$i + 1];
+            for ($i = 0; $i+1 < count($arr); $i++) {
+                $rez = $rez - $arr[$i+1];
             }
             output($argArray, $arr, $rez);
             break;
