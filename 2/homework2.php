@@ -18,7 +18,6 @@ function cool_func($array, $case = false)
     }
     return null;
 }
-
 cool_func($array1);
 echo "<br>===========================================================================<br>";
 $asd = cool_func($array1, true);
@@ -180,7 +179,7 @@ function table($firstNumber, $secondNumber)
 
 //===============================================================================
 echo "<h2>EXERCISE №5<br>_________________________<br></h2>";
-$is_palindrom = 'racecar';
+$is_palindrom = 'raCe CaR';
 newOutput(is_palindrom($is_palindrom));
 function newOutput($input)
 {
@@ -193,6 +192,7 @@ function newOutput($input)
 function is_palindrom($string)
 {
     $revString = '';
+    $string = strtolower(str_replace(' ', '', $string));
     for ($i = 0; $i < mb_strlen($string); $i++) {
         $revString = $revString . $string[mb_strlen($string) - 1 - $i];
     }
