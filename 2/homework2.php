@@ -18,6 +18,7 @@ function cool_func($array, $case = false)
     }
     return null;
 }
+
 cool_func($array1);
 echo "<br>===========================================================================<br>";
 $asd = cool_func($array1, true);
@@ -120,8 +121,8 @@ function calcEverything()
             break;
         case '-':
             $rez = $arr[0];
-            for ($i = 0; $i+1 < count($arr); $i++) {
-                $rez = $rez - $arr[$i+1];
+            for ($i = 0; $i + 1 < count($arr); $i++) {
+                $rez = $rez - $arr[$i + 1];
             }
             output($argArray, $arr, $rez);
             break;
@@ -189,6 +190,7 @@ function newOutput($input)
         echo "Введённая строка не палиндром";
     }
 }
+
 function is_palindrom($string)
 {
     $revString = '';
