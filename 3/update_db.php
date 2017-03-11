@@ -5,7 +5,7 @@ $dir = 'photos';
 if (!file_exists($dir)) {
     mkdir($dir, 0777);
 }
-if($photo['name'] == '') {
+if(empty($photo['name'])) {
     $db = @mysqli_connect("localhost", "root", "", "smilebook");
     $sql_photo = "SELECT photo FROM `users` WHERE id = $_SESSION[userid]";
     $result = $db->query($sql_photo);
