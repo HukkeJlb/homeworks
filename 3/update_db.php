@@ -5,11 +5,19 @@ $dir = 'photos';
 if (!file_exists($dir)) {
     mkdir($dir, 0777);
 }
-$pattern = '|\.+[a-zA-Z0-9]+|i'; //|.*(\.)|
-preg_match_all($pattern, $photo['name'], $photo1);
-$file_path = $dir . '/' . $_SESSION['userid']. $photo1[0][count($photo1[0]) - 1];
-$file_name = $_SESSION['userid']. $photo1[0][count($photo1[0]) - 1];
-$result = move_uploaded_file($photo['tmp_name'], $file_path);
+if($photo['name'] == '') {
+    $db = @mysqli_connect("localhost", "root", "", "smilebook");
+    $sql_photo = "SELECT photo FROM `users` WHERE id = $_SESSION[userid]";
+    $result = $db->query($sql_photo);
+    $file_name_array = $result->fetch_all();
+    $file_name = $file_name_array[0][0];
+} else {
+    $pattern = '|\.+[a-zA-Z0-9]+|i'; //|.*(\.)|
+    preg_match_all($pattern, $photo['name'], $photo1);
+    $file_path = $dir . '/' . $_SESSION['userid']. $photo1[0][count($photo1[0]) - 1];
+    $file_name = $_SESSION['userid']. $photo1[0][count($photo1[0]) - 1];
+    $result = move_uploaded_file($photo['tmp_name'], $file_path);
+}
 $db = @mysqli_connect("localhost", "root", "", "smilebook");
 $sql = "UPDATE users SET name=\"$_POST[name]\", age=\"$_POST[age]\", description=\"$_POST[description]\", photo=\"$file_name\"
 WHERE id=$_SESSION[userid]";
