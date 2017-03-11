@@ -1,3 +1,6 @@
+<?php
+require("security.php")
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Data</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,10 +43,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.html">Авторизация</a></li>
-            <li><a href="reg.html">Регистрация</a></li>
-            <li><a href="list.html">Список пользователей</a></li>
-            <li class="active"><a href="filelist.html">Список файлов</a></li>
+            <li><a href="login_success.php">Личный кабинет</a></li>
+            <li class="active"><a href="list.php">Список пользователей</a></li>
+            <li><a href="filelist.php">Список файлов</a></li>
+            <li><a href="logout.php">Выйти</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -51,18 +54,24 @@
 
     <div class="container">
     <h1>Запретная зона, доступ только авторизированному пользователю</h1>
-      <h2>Информация выводится из списка файлов</h2>
+      <h2>Информация выводится из базы данных</h2>
       <table class="table table-bordered">
         <tr>
-          <th>Название файла</th>
+          <th>Пользователь(логин)</th>
+          <th>Имя</th>
+          <th>возраст</th>
+          <th>описание</th>
           <th>Фотография</th>
           <th>Действия</th>
         </tr>
         <tr>
-          <td>1.jpg</td>
+          <td>vasya99</td>
+          <td>Вася</td>
+          <td>14</td>
+          <td>Эксперт в спорах в интернете</td>
           <td><img src="http://lorempixel.com/people/200/200/" alt=""></td>
           <td>
-            <a href="">Удалить аватарку пользователя</a>
+            <a href="">Удалить пользователя</a>
           </td>
         </tr>
       </table>

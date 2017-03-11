@@ -1,3 +1,6 @@
+<?php
+require("security.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Личный кабинет Smilebook</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,36 +43,46 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Авторизация</a></li>
-                <li><a href="reg.html">Регистрация</a></li>
-                <li><a href="list.html">Список пользователей</a></li>
-                <li><a href="filelist.html">Список файлов</a></li>
+                <li class="active"><a href="login_success.php">Личный кабинет</a></li>
+                <li><a href="list.php">Список пользователей</a></li>
+                <li><a href="filelist.php">Список файлов</a></li>
+                <li><a href="logout.php">Выйти</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
 <div class="container">
-
     <div class="form-container">
-        <form class="form-horizontal" action="login.php" method="post">
-            <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
-                <div class="col-sm-10">
-                    <input type="text" name="login" class="form-control" id="inputEmail3" placeholder="Логин">
+        <form class="col-sm-6" action="update_db.php" method="post" enctype="multipart/form-data">
+            <div class="form-group col-sm-12">
+                <label for="name" class="col-sm-4 control-label">Имя</label>
+                <div class="col-sm-8">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
-                <div class="col-sm-10">
-                    <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Пароль">
+            <div class="form-group col-sm-12">
+                <label for="birthday" class="col-sm-4 control-label">Дата рождения</label>
+                <div class="col-sm-8">
+                    <input type="date" name="age" id="birthday" class="form-control">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-12">
+                <label for="desc" class="col-sm-4 control-label">О себе:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="description" class="form-control" id="desc" placeholder="Пару слов о себе">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="name" class="col-sm-4 control-label">Загрузить фотографию</label>
+                <div class="col-sm-8">
+                    <input type="file" name="photo" class="form-control" id="photo">
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Войти</button>
+                    <button type="submit" class="btn btn-default">Сохранить изменения</button>
                     <br><br>
-                    Нет аккаунта? <a href="reg.html">Зарегистрируйтесь</a>
                 </div>
             </div>
         </form>
