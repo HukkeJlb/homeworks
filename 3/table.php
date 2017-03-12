@@ -12,11 +12,14 @@ function tab($data)
         $ret .= '<th>' . $key . '</th>';
     }
     $ret .= '</tr>';
-
     foreach ($data as $key1 => $val1) {
         $ret .= '<tr>';
         foreach ($val1 as $key2 => $val2) {
-            $ret .= '<td>' . $val2 . '</td>';
+            if ($key2 == 'Фотография'){
+                $ret .= "<td><img src='photos/$val2' height='100px'></td>";
+            } else {
+                $ret .= '<td>' . $val2 . '</td>';
+            }
         }
         $ret .= '</tr>';
     }
@@ -42,17 +45,19 @@ function change_key($arr)
         cng_key('name', 'Имя', $arr[$i], true);
         cng_key('age', 'Дата рождения', $arr[$i], true);
         cng_key('description', 'Описание', $arr[$i], true);
+        cng_key('photo', 'Фотография', $arr[$i], true);
     }
     return $arr;
 }
 $db = @mysqli_connect("localhost", "root", "", "smilebook");
-$sql = 'SELECT login, name, age, description FROM `users`';
+$sql = 'SELECT id, login, name, age, description, photo FROM `users`';
 $result = $db->query($sql);
 $records = $result->fetch_all(MYSQLI_ASSOC);
 $data = change_key($records);
+
 for ($i = 0; ($i <= count($data) - 1); $i++) {
-    $data[$i]['Фотография'] = '<img src="http://lorempixel.com/people/200/200/" height=100px>';
-    $data[$i]['Действие'] = '<a href="">Удалить пользователя</a>';
+    $index = $data[$i]['id'];
+    $data[$i]['Действие'] = "<form action='deleteuser.php' method='post'><input type='hidden' value='$index' name='id'><button type='submit'>Удалить пользователя</button></form>";
 }
 echo tab($data);
 ?>

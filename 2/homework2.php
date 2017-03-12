@@ -158,7 +158,7 @@ function calcEverything()
 
 //===============================================================================
 echo "<h2>EXERCISE №4<br>_________________________<br></h2>";
-table(4, 7);
+table(2, 4);
 function table($firstNumber, $secondNumber)
 {
     if ((!is_int($firstNumber)) || (!is_int($secondNumber))) {

@@ -28,6 +28,7 @@ if (!empty($check_login['id'])) {
     exit ("<h1>Извините, введённый вами логин уже зарегистрирован. Введите другой логин.<br><a href='reg.html'>Вернуться назад</a></h1>");
 }
 $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$password\")";
+//$user_id = $db->insert_id;
 $result2 = mysqli_query($db, $sql2);
 if ($result2) {
     echo "<h1>Вы успешно зарегистрированы! Теперь вы можете зайти на сайт.<br> <a href='index.html'>Главная страница</a></h1>";
