@@ -4,14 +4,22 @@
 //header('Refresh: 5; URL="index.html"');
 if (isset($_POST['login'])) {
     $login = $_POST['login'];
+    $login = stripslashes($login);
+    $login = htmlspecialchars($login);
+    $login = trim($login);
     if ($login == '') {
         unset($login);
     }
 }
 if (isset($_POST['password'])) {
     $password = $_POST['password'];
-    if ($password == '') {
-        unset($password);
+    $password = stripslashes($password);
+    $password = htmlspecialchars($password);
+    $password = trim($password);
+    $salt = 'stfu228solo322';
+    $hashedpassword = crypt($password, $salt);
+    if ($hashedpassword == '') {
+        unset($hashedpassword);
     }
 }
 if (empty($login) || empty($password)) {
@@ -27,7 +35,7 @@ $check_login = mysqli_fetch_array($result); //$check_login = $result->fetch_all(
 if (!empty($check_login['id'])) {
     exit ("<h1>Извините, введённый вами логин уже зарегистрирован. Введите другой логин.<br><a href='reg.html'>Вернуться назад</a></h1>");
 }
-$sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$password\")";
+$sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
 //$user_id = $db->insert_id;
 $result2 = mysqli_query($db, $sql2);
 if ($result2) {

@@ -8,13 +8,15 @@ if (isset($_POST['login'])) {
 if (isset($_POST['password'])) {
     $password = $_POST['password'];
 } else {
-    $login = '';
+    $password = '';
 }
 if ((!$password) || (!$login)) {
     exit ('<h1>Вы оставили пустым окно "Логин" или "Пароль"<br><a href="index.html">Вернуться назад</a></h1>');
 }
+$salt = 'stfu228solo322';
+$hashedpassword = crypt($password, $salt);
 $db = @mysqli_connect("localhost", "root", "", "smilebook");
-$sql = "SELECT id FROM users WHERE BINARY login=\"$login\" AND BINARY password=\"$password\"";
+$sql = "SELECT id FROM users WHERE BINARY login=\"$login\" AND BINARY password=\"$hashedpassword\"";
 $result = $db->query($sql);
 $check = $result->fetch_all(MYSQLI_ASSOC); //mysqli_fetch_array($result)
 if (!$check) {
