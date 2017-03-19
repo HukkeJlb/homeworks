@@ -61,7 +61,7 @@ $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
 $age = $_POST['age'];
 $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
 if (empty($photo['name'])) {
-    $db = @mysqli_connect("localhost", "root", "", "smilebook");
+    require "database.php";
     $sql_photo = "SELECT photo FROM `users` WHERE id = $_SESSION[userid]";
     $result = $db->query($sql_photo);
     $file_name_array = $result->fetch_all();
@@ -81,7 +81,7 @@ if (empty($photo['name'])) {
     }
 
 }
-$db = @mysqli_connect("localhost", "root", "", "smilebook");
+require "database.php";
 $sql = "UPDATE users SET name=\"$name\", age=\"$age\", description=\"$description\", photo=\"$file_name\"
 WHERE id=$_SESSION[userid]";
 $result = $db->query($sql);

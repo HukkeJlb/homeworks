@@ -6,7 +6,7 @@ if (isset($_POST['id'])) {
 }
 function delete_user($id)
 {
-    $db = @mysqli_connect("localhost", "root", "", "smilebook");
+    require "database.php";
     $sql = "DELETE FROM `users` WHERE `users`.`id` = $id";
     $db->query($sql);
     $path = 'photos\\' . "$id" . '.jpg';

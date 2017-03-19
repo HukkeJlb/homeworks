@@ -49,7 +49,7 @@ function change_key($arr)
     return $arr;
 }
 
-$db = @mysqli_connect("localhost", "root", "", "smilebook");
+require "database.php";
 $sql = 'SELECT id, photo, photo FROM `users`';
 $result = $db->query($sql);
 $records = $result->fetch_all(MYSQLI_ASSOC);

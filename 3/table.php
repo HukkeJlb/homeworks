@@ -1,5 +1,4 @@
 <?php
-require("security.php");
 function tab($data)
 {
     $ret = '';
@@ -54,7 +53,7 @@ function change_key($arr)
     return $arr;
 }
 
-$db = @mysqli_connect("localhost", "root", "", "smilebook");
+require "database.php";
 $sql = 'SELECT id, login, name, age, description, photo FROM `users`';
 $result = $db->query($sql);
 $records = $result->fetch_all(MYSQLI_ASSOC);

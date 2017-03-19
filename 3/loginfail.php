@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Регистрация</title>
+    <title>Добро пожаловать в Smilebook</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -40,8 +41,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="index.php">Авторизация</a></li>
-                <li class="active"><a href="reg.php">Регистрация</a></li>
+                <li class="active"><a href="index.php">Авторизация</a></li>
+                <li><a href="reg.php">Регистрация</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -50,11 +51,15 @@
 <div class="container">
 
     <div class="form-container">
-
+        <?php
+        if ((!$password) || (!$login)) {
+            exit ('<h1>Вы оставили пустым окно "Логин" или "Пароль"<br><a href="index.php">Вернуться назад</a></h1>');
+        }
+        if (!$check) {
+            exit('<h1>Неверный логин или пароль<br><a href="index.php">Вернуться назад</a></h1>');
+        }
+        ?>
     </div>
-</div>
-</form>
-</div>
 
 </div><!-- /.container -->
 
@@ -68,4 +73,3 @@
 
 </body>
 </html>
-
