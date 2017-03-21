@@ -1,5 +1,4 @@
 <?php
-require('security.php');
 function tab($data)
 {
     $ret = '';

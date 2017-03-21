@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Регистрация</title>
+    <title><?= $title ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,8 +30,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -41,8 +40,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="index.php">Авторизация</a></li>
-                <li class="active"><a href="reg.php">Регистрация</a></li>
+                <li><a href="login_success.php">Личный кабинет</a></li>
+                <li><a href="list.php">Список пользователей</a></li>
+                <li><a href="filelist.php">Список файлов</a></li>
+                <li><a href="logout.php">Выйти</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
