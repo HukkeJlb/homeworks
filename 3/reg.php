@@ -40,26 +40,33 @@ require './templates/header_not_auth.php';
         $result = $db->query($sql);
         $check_login = mysqli_fetch_array($result);
         if (!empty($check_login['id'])) {
-            exit ("<h1>Извините, введённый вами логин уже зарегистрирован. Введите другой логин.<br><a href='reg.php'>Вернуться назад</a></h1>");
+            $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
         }
         $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
         $result2 = mysqli_query($db, $sql2);
         if ($result2) {
-            foreach ($messages as $message): ?>
-                <div class="alert alert-success">
-                    <strong>Успех</strong>  echo "<h1>Вы успешно зарегистрированы! Теперь вы можете зайти на сайт.<br> <a href='index.php'>Главная страница</a></h1>"; ?>
-                </div>
-            <?php endforeach;
+            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете зайти на сайт.<br> <a href=\'index.php\'>Авторизоваться</a>';
         } else {
-            echo "<h1>Ошибка! Вы не зарегистрированы.</h1>";
+            $errors[] = 'Ошибка! Вы не зарегистрированы.';
         }
     }
     ?>
-<!--    --><?php //foreach ($errors as $error): ?>
-<!--        <div class="alert alert-warning">-->
-<!--            <strong>Ошибка</strong> --><?php //echo $error; // <?= $error; ?>
-<!--        </div>-->
-<!--    --><?php //endforeach; ?>
+
+    <div class="container">
+        <?php foreach ($errors as $error): ?>
+            <div class="alert alert-warning">
+                <strong>Ошибка:</strong> <?php echo $error; // <?= $error; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="container">
+        <?php foreach ($messages as $message): ?>
+            <div class="alert alert-success">
+                <strong>Успех:</strong> <?php echo $message; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
     <div class="form-container">
 
