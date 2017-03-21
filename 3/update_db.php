@@ -6,7 +6,6 @@ require './templates/header_auth.php';
 ?>
 <div class="container">
 <?php
-require 'security.php';
 $photo = $_FILES['photo'];
 $dir = 'photos';
 if (!file_exists($dir)) {

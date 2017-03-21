@@ -41,8 +41,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="index.php">Авторизация</a></li>
-                <li><a href="reg.php">Регистрация</a></li>
+                <li <? if($active == 'Авторизация') {echo 'class="active"';} else {echo '';} ?> ><a href="index.php">Авторизация</a></li>
+                <li <? if($active == 'Регистрация') {echo 'class="active"';} else {echo '';} ?> ><a href="reg.php">Регистрация</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

@@ -40,9 +40,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="login_success.php">Личный кабинет</a></li>
-                <li><a href="list.php">Список пользователей</a></li>
-                <li><a href="filelist.php">Список файлов</a></li>
+                <li <? if($active == 'Личный кабинет') {echo 'class="active"';} else {echo '';} ?> ><a href="login_success.php">Личный кабинет</a></li>
+                <li <? if($active == 'Список пользователей') {echo 'class="active"';} else {echo '';} ?> ><a href="list.php">Список пользователей</a></li>
+                <li <? if($active == 'Список файлов') {echo 'class="active"';} else {echo '';} ?> ><a href="filelist.php">Список файлов</a></li>
                 <li><a href="logout.php">Выйти</a></li>
             </ul>
         </div><!--/.nav-collapse -->

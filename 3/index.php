@@ -4,7 +4,11 @@ $active = 'Авторизация';
 require './templates/header_not_auth.php';
 ?>
     <div class="container">
-
+<!--      --><?php //foreach ($errors as $error): ?>
+<!--        <div class="alert alert-warning">-->
+<!--          <strong>Ошибка:</strong> --><?php //echo $error; // <?= $error; ?>
+<!--        </div>-->
+<!--      --><?php //endforeach; ?>
       <div class="form-container">
         <form class="form-horizontal" action="login.php" method="post">
           <div class="form-group">
