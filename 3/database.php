@@ -8,7 +8,7 @@ if (!isset($check[0])) {
     // создание таблицы
     $createTable = "
  CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(16) NOT NULL,
   `password` varchar(16) NOT NULL,
   `name` text NULL,

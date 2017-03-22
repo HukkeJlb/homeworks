@@ -29,4 +29,3 @@ if (!$check) {
 $_SESSION['userid'] = $check[0]['id'];
 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/login_success.php");
 exit();
-
