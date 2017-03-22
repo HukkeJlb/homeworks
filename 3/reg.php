@@ -5,6 +5,7 @@ require "database.php";
 
 $errors = [];
 $messages = [];
+$login = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         $login = $_POST['login'];
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
         $result2 = mysqli_query($db, $sql2);
         if ($result2) {
-            header('HTTP/1.1 307 Temporary Redirect');
+            header('HTTP/1.1 200 OK');
             header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/index.php");
             exit;
 //            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете <a href=\'index.php\'>Авторизоваться</a>';
@@ -77,7 +78,7 @@ require './templates/header_not_auth.php';
                     <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
                     <div class="col-sm-10">
                         <input type="text" name="login" maxlength="16" class="form-control" id="inputEmail3"
-                               placeholder="Логин">
+                               placeholder="Логин" value="<?= $login ?>">
                     </div>
                 </div>
                 <div class="form-group">
