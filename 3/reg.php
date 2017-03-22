@@ -1,7 +1,7 @@
 <?php
 $title = 'Регистрация';
 $active = 'Регистрация';
-require './templates/header_not_auth.php';
+require "database.php";
 
 $errors = [];
 $messages = [];
@@ -26,32 +26,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($hashedpassword);
         }
     }
-    if (empty($login) || empty($password)) {
-        $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
-    } elseif ($_POST['password'] != $_POST['verification']) {
-        $errors[] = 'Пароли не совпадают';
-    }
-    require "database.php";
 // проверка на существование пользователя с таким же логином
+    $sql = "SELECT id FROM users WHERE login=\"$login\"";
+    $result = $db->query($sql);
+    $check_login = mysqli_fetch_array($result);
+    if (!empty($check_login['id'])) {
+        $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+    }
     if (empty($errors)) {
-        $sql = "SELECT id FROM users WHERE login=\"$login\"";
-        $result = $db->query($sql);
-        $check_login = mysqli_fetch_array($result);
-        if (!empty($check_login['id'])) {
-            $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+        if (empty($login) || empty($password)) {
+            $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
+        } elseif ($_POST['password'] != $_POST['verification']) {
+            $errors[] = 'Пароли не совпадают';
         }
     }
     if (empty($errors)) {
         $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
         $result2 = mysqli_query($db, $sql2);
         if ($result2) {
-            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете <a href=\'index.php\'>Авторизоваться</a>';
+            header('HTTP/1.1 307 Temporary Redirect');
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/index.php");
+            exit;
+//            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете <a href=\'index.php\'>Авторизоваться</a>';
         } else {
             $errors[] = 'Ошибка! Вы не зарегистрированы.';
         }
     }
 }
-
+?>
+<?php
+require './templates/header_not_auth.php';
 ?>
     <div class="container">
         <?php foreach ($errors as $error): ?>
@@ -60,11 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endforeach; ?>
 
-        <?php foreach ($messages as $message): ?>
-            <div class="alert alert-success">
-                <strong>Успех:</strong> <?php echo $message; ?>
-            </div>
-        <?php endforeach; ?>
+<!--        --><?php //foreach ($messages as $message): ?>
+<!--            <div class="alert alert-success">-->
+<!--                <strong>Успех:</strong> --><?php //echo $message; ?>
+<!--            </div>-->
+<!--        --><?php //endforeach; ?>
 
         <div class="form-container">
 
