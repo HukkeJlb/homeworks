@@ -5,61 +5,66 @@ require './templates/header_not_auth.php';
 
 $errors = [];
 $messages = [];
-if (isset($_POST['login'])) {
-    $login = $_POST['login'];
-    $login = stripslashes($login);
-    $login = htmlspecialchars($login);
-    $login = trim($login);
-    if ($login == '') {
-        unset($login);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['login'])) {
+        $login = $_POST['login'];
+        $login = stripslashes($login);
+        $login = htmlspecialchars($login);
+        $login = trim($login);
+        if ($login == '') {
+            unset($login);
+        }
     }
-}
-if (isset($_POST['password'])) {
-    $password = $_POST['password'];
-    $password = stripslashes($password);
-    $password = htmlspecialchars($password);
-    $password = trim($password);
-    $salt = 'stfu228solo322';
-    $hashedpassword = crypt($password, $salt);
-    if ($hashedpassword == '') {
-        unset($hashedpassword);
+    if (isset($_POST['password'])) {
+        $password = $_POST['password'];
+        $password = stripslashes($password);
+        $password = htmlspecialchars($password);
+        $password = trim($password);
+        $salt = 'stfu228solo322';
+        $hashedpassword = crypt($password, $salt);
+        if ($hashedpassword == '') {
+            unset($hashedpassword);
+        }
     }
-}
-if (empty($login) || empty($password)) {
-    $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
-} elseif ($_POST['password'] != $_POST['verification']) {
-    $errors[] = 'Пароли не совпадают';
-}
-require "database.php";
+    if (empty($login) || empty($password)) {
+        $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
+    } elseif ($_POST['password'] != $_POST['verification']) {
+        $errors[] = 'Пароли не совпадают';
+    }
+    require "database.php";
 // проверка на существование пользователя с таким же логином
-if (empty($errors)) {
-    $sql = "SELECT id FROM users WHERE login=\"$login\"";
-    $result = $db->query($sql);
-    $check_login = mysqli_fetch_array($result);
-    if (!empty($check_login['id'])) {
-        $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+    if (empty($errors)) {
+        $sql = "SELECT id FROM users WHERE login=\"$login\"";
+        $result = $db->query($sql);
+        $check_login = mysqli_fetch_array($result);
+        if (!empty($check_login['id'])) {
+            $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+        }
     }
-    $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
-    $result2 = mysqli_query($db, $sql2);
-    if ($result2) {
-        $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете зайти на сайт.<br> <a href=\'index.php\'>Авторизоваться</a>';
-    } else {
-        $errors[] = 'Ошибка! Вы не зарегистрированы.';
+    if (empty($errors)) {
+        $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
+        $result2 = mysqli_query($db, $sql2);
+        if ($result2) {
+            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете <a href=\'index.php\'>Авторизоваться</a>';
+        } else {
+            $errors[] = 'Ошибка! Вы не зарегистрированы.';
+        }
     }
 }
+
 ?>
     <div class="container">
-            <?php foreach ($errors as $error): ?>
-                <div class="alert alert-warning">
-                    <strong>Ошибка:</strong> <?php echo $error; // <?= $error; ?>
-                </div>
-            <?php endforeach; ?>
+        <?php foreach ($errors as $error): ?>
+            <div class="alert alert-warning">
+                <strong>Ошибка:</strong> <?php echo $error; // <?= $error; ?>
+            </div>
+        <?php endforeach; ?>
 
-            <?php foreach ($messages as $message): ?>
-                <div class="alert alert-success">
-                    <strong>Успех:</strong> <?php echo $message; ?>
-                </div>
-            <?php endforeach; ?>
+        <?php foreach ($messages as $message): ?>
+            <div class="alert alert-success">
+                <strong>Успех:</strong> <?php echo $message; ?>
+            </div>
+        <?php endforeach; ?>
 
         <div class="form-container">
 
