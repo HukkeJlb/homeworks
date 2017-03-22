@@ -13,6 +13,9 @@ body {
   display: flex;
   justify-content: center;
 }
+.form-container.reg {
+   margin-top: 10%;
+ }
 .form-horizontal {
   width: 35%;
 }

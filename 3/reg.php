@@ -4,7 +4,6 @@ $active = 'Регистрация';
 require "database.php";
 
 $errors = [];
-$messages = [];
 $login = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
@@ -46,9 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result2 = mysqli_query($db, $sql2);
         if ($result2) {
             header('HTTP/1.1 200 OK');
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/index.php");
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/index.php?reg=ok");
             exit;
-//            $messages [] = 'Вы успешно зарегистрированы! Теперь вы можете <a href=\'index.php\'>Авторизоваться</a>';
         } else {
             $errors[] = 'Ошибка! Вы не зарегистрированы.';
         }
@@ -58,39 +56,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php
 require './templates/header_not_auth.php';
 ?>
-    <div class="container">
-        <?php foreach ($errors as $error): ?>
-            <div class="alert alert-warning">
-                <strong>Ошибка:</strong> <?php echo $error; // <?= $error; ?>
-            </div>
-        <?php endforeach; ?>
-
-<!--        --><?php //foreach ($messages as $message): ?>
-<!--            <div class="alert alert-success">-->
-<!--                <strong>Успех:</strong> --><?php //echo $message; ?>
-<!--            </div>-->
-<!--        --><?php //endforeach; ?>
-
-        <div class="form-container">
-
-            <form class="form-horizontal" action="reg.php" method="post">
+    <div class="form-container reg">
+        <form class="form-horizontal" action="reg.php" method="post">
+            <div class="form-group">
+                <?php foreach ($errors as $error): ?>
+                    <div class="alert alert-warning">
+                        <strong>Ошибка:</strong> <?php echo $error; // <?= $error; ?>
+                    </div>
+                <?php endforeach; ?>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
-                    <div class="col-sm-10">
+                    <label for="inputEmail3" class="col-sm-3 control-label">Логин</label>
+                    <div class="col-sm-9">
                         <input type="text" name="login" maxlength="16" class="form-control" id="inputEmail3"
                                placeholder="Логин" value="<?= $login ?>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
-                    <div class="col-sm-10">
+                    <label for="inputPassword3" class="col-sm-3 control-label">Пароль</label>
+                    <div class="col-sm-9">
                         <input type="password" name="password" maxlength="16" class="form-control" id="inputPassword3"
                                placeholder="Пароль">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword4" class="col-sm-2 control-label">Повторите пароль</label>
-                    <div class="col-sm-10">
+                    <label for="inputPassword4" class="col-sm-3 control-label">Повторите пароль</label>
+                    <div class="col-sm-9">
                         <input type="password" name="verification" maxlength="16" class="form-control"
                                id="inputPassword4"
                                placeholder="Пароль">
@@ -104,8 +94,7 @@ require './templates/header_not_auth.php';
                         Зарегистрированы? <a href="index.php">Авторизируйтесь</a>
                     </div>
                 </div>
-            </form>
-        </div>
+        </form>
     </div>
 <?php
 require './templates/footer.php';

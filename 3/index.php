@@ -3,14 +3,14 @@ $title = 'Добро пожаловать в Smilebook';
 $active = 'Авторизация';
 require './templates/header_not_auth.php';
 ?>
-    <div class="container">
-<!--      --><?php //foreach ($errors as $error): ?>
-<!--        <div class="alert alert-warning">-->
-<!--          <strong>Ошибка:</strong> --><?php //echo $error; // <?= $error; ?>
-<!--        </div>-->
-<!--      --><?php //endforeach; ?>
-      <div class="form-container">
+      <div class="form-container reg">
         <form class="form-horizontal" action="login.php" method="post">
+          <?php if (isset($_GET['reg']) && ($_GET['reg'] === 'ok')): ?>
+            <div class="form-group">
+              <div class="alert alert-success">
+                <?php echo "<strong>Успех:</strong> Вы успешно зарегистрировали аккаунт! <br>Можете воспользоваться формой авторизации"; ?>
+              </div>
+              <?php endif; ?>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
             <div class="col-sm-10">
