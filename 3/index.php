@@ -1,6 +1,7 @@
 <?php
 $title = 'Добро пожаловать в Smilebook';
 $active = 'Авторизация';
+$authorized = 'n';
 $errors = [];
 $login = '';
 require "database.php";
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <?php
-require './templates/header_not_auth.php';
+require './templates/header.php';
 ?>
 <div class="form-container reg">
     <form class="form-horizontal" action="index.php" method="post">

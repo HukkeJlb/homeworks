@@ -1,6 +1,7 @@
 <?php
 $title = 'Регистрация';
 $active = 'Регистрация';
+$authorized = 'n';
 require "database.php";
 
 $errors = [];
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <?php
-require './templates/header_not_auth.php';
+require './templates/header.php';
 ?>
     <div class="form-container reg">
         <form class="form-horizontal" action="reg.php" method="post">

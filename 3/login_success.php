@@ -1,6 +1,7 @@
 <?php
 $title = 'Личный кабинет Smilebook';
 $active = 'Личный кабинет';
+$authorized = 'y';
 require 'security.php';
 require "database.php";
 
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <?php
-require './templates/header_auth.php';
+require './templates/header.php';
 ?>
 <div class="form-container reg">
     <form class="col-sm-6" action="login_success.php" method="post" enctype="multipart/form-data">

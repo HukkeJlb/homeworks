@@ -1,8 +1,9 @@
 <?php
 $title = 'Data';
 $active = 'Список пользователей';
+$authorized = 'y';
 require 'security.php';
-require './templates/header_auth.php';
+require './templates/header.php';
 ?>
     <div class="container">
         <h1>Информация выводится из базы данных</h1>

@@ -30,8 +30,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -40,10 +39,19 @@
             <a class="navbar-brand" href="#">Smilebook</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li <? if($active == 'Авторизация') {echo 'class="active"';} else {echo '';} ?> ><a href="index.php">Авторизация</a></li>
-                <li <? if($active == 'Регистрация') {echo 'class="active"';} else {echo '';} ?> ><a href="reg.php">Регистрация</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
+            <? if ($authorized == 'y'): ?>
+                <ul class="nav navbar-nav">
+                    <li <? if($active == 'Личный кабинет') {echo 'class="active"';} else {echo '';} ?> ><a href="login_success.php">Личный кабинет</a></li>
+                    <li <? if($active == 'Список пользователей') {echo 'class="active"';} else {echo '';} ?> ><a href="list.php">Список пользователей</a></li>
+                    <li <? if($active == 'Список файлов') {echo 'class="active"';} else {echo '';} ?> ><a href="filelist.php">Список файлов</a></li>
+                    <li><a href="logout.php">Выйти</a></li>
+                </ul>
+            <? elseif($authorized == 'n'): ?>
+                <ul class="nav navbar-nav">
+                    <li <? if($active == 'Авторизация') {echo 'class="active"';} else {echo '';} ?> ><a href="index.php">Авторизация</a></li>
+                    <li <? if($active == 'Регистрация') {echo 'class="active"';} else {echo '';} ?> ><a href="reg.php">Регистрация</a></li>
+                </ul>
+            <? endif; ?>
+        </div>
     </div>
 </nav>
