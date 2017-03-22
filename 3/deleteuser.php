@@ -12,5 +12,6 @@ function delete_user($id)
     $path = 'photos\\' . "$id" . '.jpg';
     @unlink($path);
 }
+
 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/3/list.php");
 exit();

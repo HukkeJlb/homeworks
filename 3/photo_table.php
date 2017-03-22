@@ -1,4 +1,6 @@
 <?php
+require "database.php";
+
 function tab($data)
 {
     $ret = '';
@@ -48,7 +50,6 @@ function change_key($arr)
     return $arr;
 }
 
-require "database.php";
 $sql = 'SELECT id, photo, photo FROM `users`';
 $result = $db->query($sql);
 $records = $result->fetch_all(MYSQLI_ASSOC);
