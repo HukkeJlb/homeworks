@@ -12,9 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $login = stripslashes($login);
         $login = htmlspecialchars($login);
         $login = trim($login);
-        if ($login == '') {
-            unset($login);
-        }
     }
     if (isset($_POST['password'])) {
         $password = $_POST['password'];
@@ -27,17 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($hashedpassword);
         }
     }
-// проверка на существование пользователя с таким же логином
-    $sql = "SELECT id FROM users WHERE login=\"$login\"";
-    $result = $db->query($sql);
-    $check_login = mysqli_fetch_array($result);
-    if (!empty($check_login['id'])) {
-        $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+    if (empty($login) || empty($password) || empty($_POST['verification'])) {
+        $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
     }
     if (empty($errors)) {
-        if (empty($login) || empty($password)) {
-            $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
-        } elseif ($_POST['password'] != $_POST['verification']) {
+        // проверка на существование пользователя с таким же логином
+        $sql = "SELECT id FROM users WHERE login=\"$login\"";
+        $result = $db->query($sql);
+        $check_login = mysqli_fetch_array($result);
+        if (!empty($check_login['id'])) {
+            $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
+        }
+    }
+    if (empty($errors)) {
+        if ($_POST['password'] != $_POST['verification']) {
             $errors[] = 'Пароли не совпадают';
         }
     }
