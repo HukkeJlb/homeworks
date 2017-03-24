@@ -2,37 +2,46 @@
 
 trait ReverseGear
 {
-    public $direction;
+    public $transmission;
+    protected $direction;
     protected $gear;
-    protected function transmissionOn($direction, $speed = 0)
-    {
-        if ($direction == 'Вперёд') {
-            $this->move_forward($speed);
-        } elseif ($direction == 'Назад') {
-            $this->move_backward($speed);
-        }
-    }
 
     protected function move_backward($speed)
     {
         echo "Включена задняя передача: едем назад со скоростью $speed км/ч<br>";
     }
 
+    protected function transmissionOn($transmission, $direction, $speed = 0)
+    {
+        if ($transmission == 'автоматическая') {
+            if ($direction == 'вперёд') {
+                $this->move_forward_auto($speed);
+            } elseif ($direction == 'назад') {
+                $this->move_backward($speed);
+            }
+        } elseif ($transmission == 'механическая') {
+            if ($direction == 'вперёд') {
+                $this->move_forward_manual($speed);
+            } elseif ($direction == 'назад') {
+                $this->move_backward($speed);
+            }
+        }
+    }
 }
 
 trait TransmissionManual
 {
     use ReverseGear;
 
-    protected function move_forward($speed)
+    protected function move_forward_manual($speed)
     {
         if ($speed >= 0 && $speed < 20 && $this->gear != 1) {
             $this->gear = 1;
-            echo "Включена 1 передача: едем вперед со скоростью $speed км/ч<br>";
+            echo "Включаем 1 передачу: едем вперед со скоростью $speed км/ч<br>";
         }
         if ($speed >= 20 && $this->gear != 2) {
             $this->gear = 2;
-            echo "Включена 2 передача: едем вперед со скоростью $speed км/ч<br>";
+            echo "Включаем 2 передачу: едем вперед со скоростью $speed км/ч<br>";
         }
 
     }
@@ -40,10 +49,10 @@ trait TransmissionManual
 
 trait TransmissionAuto
 {
-    use ReverseGear;
+//    use ReverseGear;
 
-    protected function move_forward($speed)
+    protected function move_forward_auto($speed)
     {
-        echo "Включена автоматическая коробка передач, едем вперед со скоростью " . $speed . " м/с<br>";
+        echo "Включаем селектор Drive, едем вперед со скоростью " . $speed . " м/с<br>";
     }
 }

@@ -3,43 +3,41 @@
 trait Engine
 {
     public $horsePower;
-    public $engineTemperature = 18;
+    protected $engineTemperature = 17; //температура двигателя по умолчанию
     public $maxSpeed;
-    public $distance;
+    protected $distance;
 
     public function MaxSpeed()
     {
         $maxSpeed = ($this->horsePower) * 2;
-        echo "Максимальная скорость автомобиля равна $maxSpeed км/ч<br>";
         $this->maxSpeed = $maxSpeed;
     }
 
-
-    protected function EngineOn($turn)
+    protected function EngineStatus($turn)
     {
-        if ($turn == true) {
-            echo 'Двигатель заведён<br>';
+        if ($turn == 'on') {
+            echo '<b>Двигатель заведён</b><br>';
+        } elseif ($turn == 'off') {
+            echo '<b>Двигатель заглушён</b><br>';
+            $this->engineTemperature = 17;
         }
     }
 
-    protected function EngineOff($turn)
+    protected function EngineCoolOn()
     {
-        if ($turn == false) {
-            echo 'Двигатель заглушён<br>';
-        }
-    }
-
-    public function EngineCoolOn()
-    {
-        while ($this->engineTemperature >= 90) {
-            echo 'Охлаждение включено. Температура двигателя уменьшена на 10 градусов<br>';
-            $this->EngineCooling();
+        for ($i = 0; $i <= $this->distance; $i += 2) {
+            $this->engineTemperature += 1;
+            while ($this->engineTemperature >= 90) {
+                echo "<i>Проехали: $i м. -  температура двигателя достигла $this->engineTemperature С</i><br>";
+                echo '<i>Охлаждение включено - </i>';
+                $this->EngineCooling();
+            }
         }
     }
 
     private function EngineCooling()
     {
         $this->engineTemperature -= 10;
-        echo "Двигатель охлаждён до $this->engineTemperature<br>";
+        echo "<i>двигатель охлаждён до $this->engineTemperature С</i><br>";
     }
 }
