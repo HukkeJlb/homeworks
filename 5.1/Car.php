@@ -4,10 +4,34 @@ require 'Transmission.php';
 
 class Car
 {
-    use Engine, TransmissionManual, TransmissionAuto;
+    use Engine, TransmissionManual, TransmissionAuto {
+    TransmissionManual::moveBackward insteadof TransmissionAuto;
+    TransmissionAuto::moveBackward as goBackAuto;
+}
+
+
     protected $speed;
     protected $time;
     public $color;
+    const TRANSMISSION_AUTO = 'transmission_auto';
+    const TRANSMISSION_MANUAL = 'transmission_manual';
+    
+    protected function transmissionOn($transmission, $direction, $speed = 0)
+    {
+        if (($transmission == Car::TRANSMISSION_AUTO) || ($transmission == 'автоматическая')) {
+            if ($direction == 'вперёд') {
+                $this->moveForwardAuto($speed);
+            } elseif ($direction == 'назад') {
+                $this->goBackAuto($speed);
+            }
+        } elseif (($transmission == Car::TRANSMISSION_MANUAL) || ($transmission == 'механическая')) {
+            if ($direction == 'вперёд') {
+                $this->moveForwardManual($speed);
+            } elseif ($direction == 'назад') {
+                $this->moveBackward($speed);
+            }
+        }
+    }
 
     public function move($distance, $speed, $direction) // $distance - В метрах, $speed в км/ч
     {

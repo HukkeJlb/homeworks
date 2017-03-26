@@ -6,34 +6,18 @@ trait ReverseGear
     protected $direction;
     protected $gear;
 
-    protected function move_backward($speed)
+    protected function moveBackward($speed)
     {
         echo "Включена задняя передача: едем назад со скоростью $speed км/ч<br>";
     }
 
-    protected function transmissionOn($transmission, $direction, $speed = 0)
-    {
-        if ($transmission == 'автоматическая') {
-            if ($direction == 'вперёд') {
-                $this->move_forward_auto($speed);
-            } elseif ($direction == 'назад') {
-                $this->move_backward($speed);
-            }
-        } elseif ($transmission == 'механическая') {
-            if ($direction == 'вперёд') {
-                $this->move_forward_manual($speed);
-            } elseif ($direction == 'назад') {
-                $this->move_backward($speed);
-            }
-        }
-    }
 }
 
 trait TransmissionManual
 {
     use ReverseGear;
 
-    protected function move_forward_manual($speed)
+    protected function moveForwardManual($speed)
     {
         if ($speed >= 0 && $speed < 20 && $this->gear != 1) {
             $this->gear = 1;
@@ -49,9 +33,9 @@ trait TransmissionManual
 
 trait TransmissionAuto
 {
-//    use ReverseGear;
+    use ReverseGear;
 
-    protected function move_forward_auto($speed)
+    protected function moveForwardAuto($speed)
     {
         echo "Включаем селектор Drive, едем вперед со скоростью " . $speed . " м/с<br>";
     }
