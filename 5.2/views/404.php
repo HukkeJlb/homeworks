@@ -29,7 +29,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <?php echo $taskList; ?>
+        <h1>Ошибка 404 - Not Found</h1>
     </div>
 </div>
 

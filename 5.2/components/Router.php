@@ -11,13 +11,13 @@ class Router
         $this->routes = require($routesPath);
     }
 
-// Return type
 
     private function getURI()
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
             return trim($_SERVER['REQUEST_URI'], '/');
         }
+        return null;
     }
 
     public function run()
@@ -27,8 +27,6 @@ class Router
         foreach ($this->routes as $uriPattern => $path) {
 
             if (preg_match("~$uriPattern~", $uri)) {
-
-                // Получаем внутренний путь из внешнего согласно правилу.
 
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
@@ -47,16 +45,25 @@ class Router
                 if (file_exists($controllerFile)) {
                     include_once($controllerFile);
                 }
-
                 $controllerObject = new $controllerName;
-				
+
                 $result = @call_user_func_array(array($controllerObject, $actionName), $parameters);
 
                 if ($result != null) {
                     break;
                 }
-            }
+            } else {
 
+            }
         }
+    }
+
+    static function ErrorPage404()
+    {
+        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+        header('HTTP/1.1 404 Not Found');
+        header('Status: 404 Not Found');
+        header('Location:' . $host . '404');
+        exit;
     }
 }

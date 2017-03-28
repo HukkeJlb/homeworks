@@ -1,7 +1,5 @@
 <?php
 
-require ROOT . '/models/Main.php';
-
 class MainController
 {
     public function actionIndex()

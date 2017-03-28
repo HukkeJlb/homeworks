@@ -21,6 +21,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="task">Задание</a></li>
+                <li><a href="register">Регистрация</a></li>
             </ul>
         </div>
     </div>
