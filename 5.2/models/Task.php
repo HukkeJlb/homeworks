@@ -9,7 +9,7 @@ class Task
         $db = Db::getConnection();
         $taskList = array();
 
-        $result = $db->query('SELECT name, age, description, photo, if(CURRENT_DATE()-age >= 180000,\'Совершеннолетний\',\'Несовершеннолетний\') as ageStatus FROM users ORDER BY 5');
+        $result = $db->query('SELECT name, age, description, photo, if(CURRENT_DATE()-age >= 180000,\'Совершеннолетний\',\'Несовершеннолетний\') as ageStatus FROM users ORDER BY 2 DESC ');
 
         $records = $result->fetch_all(MYSQLI_ASSOC);
         $data = Task::changeKey($records);

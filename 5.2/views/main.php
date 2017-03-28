@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Наш сайт</title>
+    <title>Учим MVC</title>
     <link rel="stylesheet" href="/assets/template/css/bootstrap.css"/>
     <link rel="stylesheet" href="/assets/template/css/bootstrap-theme.css"/>
 </head>
