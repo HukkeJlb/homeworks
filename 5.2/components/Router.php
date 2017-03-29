@@ -1,69 +1,150 @@
 <?php
 
-class Router
-{
+class Router {
 
-    private $routes;
+    protected $modelPath        = 'models/';
+    protected $controllerPath   = 'controllers/';
+
+
+    protected $prefixController = 'controller_';
+    protected $prefixModel      = 'model_';
+    protected $prefixAction     = 'action_';
+
+    protected $controller       = 'Main';
+    protected $model            = 'Main';
+    protected $action           = 'index';
+
+    protected $url;
+    protected $partsUrl;
+
+    protected $controllerName   = 'Main';
+    protected $modelName        = 'Main';
 
     public function __construct()
     {
-        $routesPath = ROOT . '/config/routes.php';
-        $this->routes = require($routesPath);
+        $this->url = $_SERVER['REQUEST_URI'];
+        $this->parse();
+
+        $this->includeFile();
+
+    }
+
+    protected function parse()
+    {
+        $this->partsUrl = explode('/', $this->url);
+
+        $this->getControllerPath();
+        $this->getModelPath();
+
+        $this->getControllerName();
+        $this->getModelName();
+        $this->getActionName();
+
+    }
+
+    protected function getControllerName()
+    {
+        if( empty($this->partsUrl[1]) === false)
+        {
+            $this->controllerName = ucwords($this->prefixController) . ucwords($this->partsUrl[1]);
+        } else{
+            $this->controllerName = ucwords($this->prefixController) . ucwords( $this->controllerName );
+        }
+
+    }
+    protected function getModelName()
+    {
+        if( empty($this->partsUrl[1]) === false)
+        {
+            $this->modelName = ucwords( $this->prefixModel) . ucwords( $this->partsUrl[1] );
+        } else{
+            $this->modelName = ucwords( $this->prefixModel) . ucwords( $this->modelName );
+        }
+
+    }
+    protected function getActionName()
+    {
+        if( empty($this->partsUrl[2]) === false)
+        {
+            $this->action = $this->prefixAction . $this->partsUrl[2];
+        } else{
+            $this->action = $this->prefixAction.$this->action;
+        }
+
+    }
+
+    protected function getControllerPath()
+    {
+        if( empty($this->partsUrl[1]) === false)
+        {
+            $this->controller = $this->controllerPath . $this->normalizeStringFileName( $this->prefixController . $this->partsUrl[1] );
+        } else{
+            $this->controller = $this->controllerPath . $this->normalizeStringFileName( $this->prefixController . $this->controller );
+        }
     }
 
 
-    private function getURI()
+    protected function getModelPath()
     {
-        if (!empty($_SERVER['REQUEST_URI'])) {
-            return trim($_SERVER['REQUEST_URI'], '/');
+        if( empty($this->partsUrl[1]) === false)
+        {
+            $this->model = $this->modelPath . $this->normalizeStringFileName( $this->prefixModel . $this->partsUrl[1] );
+        } else{
+            $this->model = $this->modelPath . $this->normalizeStringFileName( $this->prefixModel . $this->model );
         }
-        return null;
+    }
+
+    protected function includeFile()
+    {
+        if($this->isFileExist($this->controller))
+        {
+            $this->includeController();
+        }else{
+            $this->ErrorPage404();
+        }
+
+        if($this->isFileExist($this->model))
+        {
+            $this->includeModel();
+        }
+    }
+    protected function includeModel()
+    {
+        include $this->model;
+    }
+    protected function includeController()
+    {
+        return include $this->controller;
+    }
+
+    protected function isFileExist($fileName) : bool
+    {
+        return file_exists($fileName);
+    }
+    protected function normalizeStringFileName(string $someString) : string
+    {
+        return strtolower($someString).'.php';
+    }
+
+    public function ErrorPage404()
+    {
+        $host = 'http://'.$_SERVER['HTTP_HOST'] . '/';
+
+        header('HTTP/1.1 404 Not Found');
+        header('Status: 404 Not Found');
+        header('Location:'. $host .'404');
     }
 
     public function run()
     {
-        $uri = $this->getURI();
 
-        foreach ($this->routes as $uriPattern => $path) {
+        $controller = new $this->controllerName;
+        $action     = $this->action;
 
-            if (preg_match("~$uriPattern~", $uri)) {
-
-                $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-
-                $segments = explode('/', $internalRoute);
-
-                $controllerName = array_shift($segments) . 'Controller';
-                $controllerName = ucfirst($controllerName);
-
-
-                $actionName = 'action' . ucfirst(array_shift($segments));
-
-                $parameters = $segments;
-
-
-                $controllerFile = ROOT . '/controllers/' . $controllerName . '.php';
-                if (file_exists($controllerFile)) {
-                    include_once($controllerFile);
-                }
-                $controllerObject = new $controllerName;
-
-                $result = @call_user_func_array(array($controllerObject, $actionName), $parameters);
-
-                if ($result != null) {
-                    break;
-                }
-            } else {
-
-            }
+        if(method_exists($controller, $action)){
+            $controller->$action();
+        }else{
+            $this->ErrorPage404();
         }
-    }
-
-    static function ErrorPage404()
-    {
-        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
-        header('HTTP/1.1 404 Not Found');
-        header('Status: 404 Not Found');
-        header('Location:' . $host . '404');
-        exit;
     }
 }
