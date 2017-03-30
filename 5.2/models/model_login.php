@@ -29,7 +29,7 @@ class Login extends Model
                 $hashedpassword = crypt($password, $salt);
                 $sql = "SELECT id FROM users WHERE BINARY login=\"$login\" AND BINARY password=\"$hashedpassword\"";
                 $result = $db->query($sql);
-                $check = $result->fetch_all(MYSQLI_ASSOC); //mysqli_fetch_array($result)
+                $check = $result->fetch_all(MYSQLI_ASSOC);
                 if (!$check) {
                     $errors[] = 'Неверный логин или пароль';
                 }
@@ -41,7 +41,7 @@ class Login extends Model
 //                echo "<h1>Привет, $login!</h1>";
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/success");
             }
-            $data = [$login,$errors];
+            $data = [$login, $errors];
         }
         return $data;
     }

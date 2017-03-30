@@ -15,8 +15,8 @@ class Controller_Task extends Controller
 
         $this->view->generate('task_view.twig',
             array(
-                'title'=> 'Задание',
-                'data'=> $data,
+                'title' => 'Задание',
+                'data' => $data,
                 'task' => 'active'
             )
         );
