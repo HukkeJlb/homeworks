@@ -1,10 +1,10 @@
 <?php
 
 
-class Task
+class Task extends Model
 {
 
-    public static function getList()
+    public function getData()
     {
         $db = Db::getConnection();
         $taskList = array();

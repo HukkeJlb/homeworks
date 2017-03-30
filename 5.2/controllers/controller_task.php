@@ -1,16 +1,24 @@
 <?php
 
-class Controller_Task
+class Controller_Task extends Controller
+
 {
+    function __construct()
+    {
+        parent::__construct();
+        $this->model = new Task();
+    }
 
     public function action_index()
     {
-        $taskList = array();
-        $taskList = Task::getList();
+        $data = $this->model->getData();
 
-        require_once(ROOT . '/views/task.php');
-
-        return true;
+        $this->view->generate('task_view.twig',
+            array(
+                'title'=> 'Задание',
+                'data'=> $data
+            )
+        );
     }
 
 }

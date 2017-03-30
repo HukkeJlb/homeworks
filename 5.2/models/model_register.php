@@ -1,13 +1,14 @@
 <?php
 
-
-class Register
+class Register extends Model
 {
 
-    public static function registration()
+    public function getData()
     {
         $errors = [];
         $login = '';
+        $data = [];
+        $db = Db::getConnection();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['login'])) {
                 $login = $_POST['login'];
@@ -48,14 +49,15 @@ class Register
                 $result2 = mysqli_query($db, $sql2);
                 if ($result2) {
                     header('HTTP/1.1 200 OK');
-                    header('Location: http://' . $_SERVER['HTTP_HOST'] . "404");
+                    header('Location: http://' . $_SERVER['HTTP_HOST'] . "");
                     exit;
                 } else {
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';
                 }
             }
+            $data = [$login, $errors];
         }
+        return $data;
     }
-
 
 }

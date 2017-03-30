@@ -1,13 +1,15 @@
 <?php
 
-class Controller_404 {
+class Controller_404 extends Controller
+{
 
     public function action_index()
     {
-
-        require_once(ROOT . '/views/404.php');
-
-        return true;
+        $this->view->generate('404.twig',
+            array(
+                'title' => 'Ошибка',
+                'content' => 'Ошибка 404 - Not Found'
+            ));
     }
 
 }

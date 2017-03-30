@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Учим MVC</title>
+    <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="/assets/template/css/bootstrap.css"/>
     <link rel="stylesheet" href="/assets/template/css/bootstrap-theme.css"/>
 </head>
@@ -29,7 +29,8 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Ошибка 404 - Not Found</h1>
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 

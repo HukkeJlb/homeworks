@@ -1,11 +1,14 @@
 <?php
 
-class Controller_Main
+class Controller_Main extends Controller
 {
     public function action_index()
     {
-        require_once(ROOT . '/views/main.php');
-        return true;
+        $this->view->generate('base_view.twig',
+            array(
+                'title'   => 'Главная страница',
+                'content' => 'Главная страница'
+            ));
     }
 
 }
