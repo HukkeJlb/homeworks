@@ -39,6 +39,7 @@ class Login extends Model
             }
             if (empty($errors)) {
 //                echo "<h1>Привет, $login!</h1>";
+                $_SESSION['login'] = $login;
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/success");
             }
             $data = [$login, $errors];
