@@ -49,7 +49,7 @@ class Register extends Model
                 $result2 = mysqli_query($db, $sql2);
                 if ($result2) {
                     header('HTTP/1.1 200 OK');
-                    header('Location: http://' . $_SERVER['HTTP_HOST'] . "");
+                    header('Location: http://' . $_SERVER['HTTP_HOST'] . "/login");
                     exit;
                 } else {
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';

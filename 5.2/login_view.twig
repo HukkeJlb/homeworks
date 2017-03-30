@@ -2,13 +2,16 @@
 {% block title %}
     {{ title }}
 {% endblock %}
+{% block errors %}
+    {{ errors }}
+{% endblock %}
 {% block content %}
     <div class="form-container reg">
         <form class="form-horizontal" action="register" method="post">
             <div class="form-group">
                 {% if errors %}
                     <div class="alert alert-warning">
-                        <strong>Ошибка: </strong> {{ errors.0 }}
+                        <strong>Ошибка: {{ errors.0 }}</strong>
                     </div>
                 {% endif %}
 

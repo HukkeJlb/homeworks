@@ -5,6 +5,7 @@
     <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="/assets/template/css/bootstrap.css"/>
     <link rel="stylesheet" href="/assets/template/css/bootstrap-theme.css"/>
+    <link href="../starter-template.css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,19 +21,17 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="task">Задание</a></li>
+                <li><a href="login">Авторизация</a></li>
                 <li><a href="register">Регистрация</a></li>
+                <li><a href="task">Задание</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="jumbotron">
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
-</div>
+{% block content %}
+{% endblock %}
+
 
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
