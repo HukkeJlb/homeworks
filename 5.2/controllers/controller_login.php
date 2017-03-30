@@ -26,7 +26,8 @@ class Controller_Login extends Controller
             array(
                 'title' => 'Авторизация',
                 'login' => $login,
-                'errors' => $errors
+                'errors' => $errors,
+                'auth' => 'active'
             ));
     }
 }

@@ -26,7 +26,8 @@ class Controller_Register extends Controller
             array(
                 'title' => 'Регистрация',
                 'login' => $login,
-                'errors' => $errors
+                'errors' => $errors,
+                'register' => 'active'
             )
         );
     }

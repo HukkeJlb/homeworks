@@ -21,9 +21,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="login">Авторизация</a></li>
-                <li><a href="register">Регистрация</a></li>
-                <li><a href="task">Задание</a></li>
+                <li {% if auth %} class="active" {% endif %}><a href="login">Авторизация</a></li>
+                <li {% if register %} class="active" {% endif %}><a href="register">Регистрация</a></li>
+                <li {% if task %} class="active" {% endif %}><a href="task">Задание</a></li>
             </ul>
         </div>
     </div>
