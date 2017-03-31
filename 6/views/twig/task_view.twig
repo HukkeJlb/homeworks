@@ -1,0 +1,28 @@
+{% extends 'layout.twig' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Имя</th>
+                    <th>Дата рождения</th>
+                    <th>Описание</th>
+                    <th>Фотография</th>
+                    <th>Статус</th>
+                </tr>
+                {% for data in data %}
+                <tr>
+                   <td>{{ data.name }}</td>
+                   <td>{{ data.age }}</td>
+                   <td>{{ data.description }}</td>
+                   <td><img src='photos/{{ data.photo }}' height='100px'></td>
+                   <td>{{ data.ageStatus }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
