@@ -60,4 +60,24 @@ class Register extends Model
         return $data;
     }
 
+    public function getLogin($data)
+    {
+        if (!empty($data[0])) {
+            $login = $data[0];
+        } else {
+            $login = '';
+        }
+        return $login;
+    }
+
+    public function getErrors($data)
+    {
+        if (!empty($data[1])) {
+            $errors = $data[1];
+        } else {
+            $errors = '';
+        }
+        return $errors;
+    }
+
 }
