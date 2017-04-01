@@ -6,8 +6,13 @@ class Login extends Model
     {
         $data = [];
         $db = Db::getConnection();
+        $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
+
+            $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+            $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+
             $errors = [];
             if (isset($_POST['login'])) {
                 $login = $_POST['login'];
@@ -19,11 +24,19 @@ class Login extends Model
             } else {
                 $password = '';
             }
-            if (!$login) {
-                $errors[] = 'Вы оставили пустым окно "Логин"';
-            } elseif (!$password) {
-                $errors[] = 'Вы оставили пустым окно "Пароль"';
+
+            if (empty ($_POST['g-recaptcha-response'])) {
+                $errors[] = 'Подтвердите, что вы не робот!';
             }
+
+            if (empty($errors)) {
+                if (!$login) {
+                    $errors[] = 'Вы оставили пустым окно "Логин"';
+                } elseif (!$password) {
+                    $errors[] = 'Вы оставили пустым окно "Пароль"';
+                }
+            }
+
             if (empty($errors)) {
                 $salt = 'stfu228solo322';
                 $hashedpassword = crypt($password, $salt);
@@ -36,9 +49,9 @@ class Login extends Model
                 if (empty($errors)) {
                     $_SESSION['userid'] = $check[0]['id'];
                 }
+
             }
             if (empty($errors)) {
-//                echo "<h1>Привет, $login!</h1>";
                 $_SESSION['login'] = $login;
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/success");
             }

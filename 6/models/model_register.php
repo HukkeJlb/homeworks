@@ -5,23 +5,31 @@ class Register extends Model
 
     public function getData()
     {
+
         $errors = [];
         $login = '';
         $data = [];
         $db = Db::getConnection();
+        $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+            $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+
             if (isset($_POST['login'])) {
                 $login = $_POST['login'];
                 $login = stripslashes($login);
                 $login = htmlspecialchars($login);
                 $login = trim($login);
             }
+
             if (isset($_POST['email'])) {
                 $email = $_POST['email'];
                 $email = stripslashes($email);
                 $email = htmlspecialchars($email);
                 $email = trim($email);
             }
+
             if (isset($_POST['password'])) {
                 $password = $_POST['password'];
                 $password = stripslashes($password);
@@ -33,9 +41,17 @@ class Register extends Model
                     unset($hashedpassword);
                 }
             }
-            if (empty($login) || empty($password) || empty($_POST['verification']) || empty($email)) {
-                $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
+
+            if (empty ($_POST['g-recaptcha-response'])) {
+                $errors[] = 'Подтвердите, что вы не робот!';
             }
+
+            if (empty($errors)) {
+                if (empty($login) || empty($password) || empty($_POST['verification']) || empty($email)) {
+                    $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
+                }
+            }
+
             if (empty($errors)) {
                 // проверка на существование пользователя с таким же логином
                 $sql = "SELECT id FROM users WHERE login=\"$login\"";
@@ -62,7 +78,7 @@ class Register extends Model
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';
                 }
             }
-            $data = [$login, $errors];
+            $data = [$login, $errors, $email];
         }
         return $data;
     }
@@ -85,6 +101,15 @@ class Register extends Model
             $errors = '';
         }
         return $errors;
+    }
+    public function getEmail($data)
+    {
+        if (!empty($data[2])) {
+            $email = $data[2];
+        } else {
+            $email = '';
+        }
+        return $email;
     }
 
     public function sendMail($email, $login)
