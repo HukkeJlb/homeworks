@@ -16,6 +16,12 @@ class Register extends Model
                 $login = htmlspecialchars($login);
                 $login = trim($login);
             }
+            if (isset($_POST['email'])) {
+                $email = $_POST['email'];
+                $email = stripslashes($email);
+                $email = htmlspecialchars($email);
+                $email = trim($email);
+            }
             if (isset($_POST['password'])) {
                 $password = $_POST['password'];
                 $password = stripslashes($password);
@@ -27,7 +33,7 @@ class Register extends Model
                     unset($hashedpassword);
                 }
             }
-            if (empty($login) || empty($password) || empty($_POST['verification'])) {
+            if (empty($login) || empty($password) || empty($_POST['verification']) || empty($email)) {
                 $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
             }
             if (empty($errors)) {
@@ -50,6 +56,7 @@ class Register extends Model
                 if ($result2) {
                     header('HTTP/1.1 200 OK');
                     header('Location: http://' . $_SERVER['HTTP_HOST'] . "/login");
+                    $this->sendMail($email, $login);
                     exit;
                 } else {
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';
@@ -78,6 +85,38 @@ class Register extends Model
             $errors = '';
         }
         return $errors;
+    }
+
+    public function sendMail($email, $login)
+    {
+        $mail = new PHPMailer;
+
+        $mail->isSMTP();
+        $mail->CharSet = 'UTF-8';
+
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'loftschoolhomeworks@gmail.com';
+        $mail->Password = 'BaHrAmA120590';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->setLanguage('ru');
+
+        $mail->setFrom('loftschoolhomeworks@gmail.com', 'LoftSchool Homeworks');
+        $mail->addAddress($email);
+
+        $mail->isHTML(true);
+
+        $mail->Subject = 'Добро пожаловать в Smilebook';
+        $mail->Body = '<h1>Доброго времени суток, ' . $login . '! Ваш аккаунт создан!</h1><br><img src="https://pp.userapi.com/c836432/v836432329/314d9/0gY2bWrdueo.jpg">';
+
+        if (!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message has been sent';
+        }
+
     }
 
 }
