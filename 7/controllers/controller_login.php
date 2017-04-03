@@ -12,14 +12,12 @@ class Controller_Login extends Controller
     public function action_index()
     {
         $data = $this->model->getData();
-        $login = $this->model->getLogin($data);
-        $errors = $this->model->getErrors($data);
 
         $this->view->generate('login_view.twig',
             array(
                 'title' => 'Авторизация',
-                'login' => $login,
-                'errors' => $errors,
+                'login' => $data['login'],
+                'errors' => $data['errors'],
                 'auth' => 'active'
             )
         );

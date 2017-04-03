@@ -4,7 +4,8 @@ class Login extends Model
 {
     public function getData()
     {
-        $data = [];
+        $login = '';
+        $errors = '';
         $db = Db::getConnection();
         $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -55,28 +56,11 @@ class Login extends Model
                 $_SESSION['login'] = $login;
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/success");
             }
-            $data = [$login, $errors];
         }
+        $data = [
+            'login' => $login,
+            'errors' => $errors
+        ];
         return $data;
-    }
-
-    public function getLogin($data)
-    {
-        if (!empty($data[0])) {
-            $login = $data[0];
-        } else {
-            $login = '';
-        }
-        return $login;
-    }
-
-    public function getErrors($data)
-    {
-        if (!empty($data[1])) {
-            $errors = $data[1];
-        } else {
-            $errors = '';
-        }
-        return $errors;
     }
 }

@@ -8,7 +8,7 @@ class Register extends Model
 
         $errors = [];
         $login = '';
-        $data = [];
+        $email = '';
         $db = Db::getConnection();
         $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
 
@@ -78,38 +78,13 @@ class Register extends Model
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';
                 }
             }
-            $data = [$login, $errors, $email];
         }
+        $data = [
+            'login' => $login,
+            'errors' => $errors,
+            'email' => $email
+        ];
         return $data;
-    }
-
-    public function getLogin($data)
-    {
-        if (!empty($data[0])) {
-            $login = $data[0];
-        } else {
-            $login = '';
-        }
-        return $login;
-    }
-
-    public function getErrors($data)
-    {
-        if (!empty($data[1])) {
-            $errors = $data[1];
-        } else {
-            $errors = '';
-        }
-        return $errors;
-    }
-    public function getEmail($data)
-    {
-        if (!empty($data[2])) {
-            $email = $data[2];
-        } else {
-            $email = '';
-        }
-        return $email;
     }
 
     public function sendMail($email, $login)

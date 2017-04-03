@@ -11,16 +11,13 @@ class Controller_Register extends Controller
     public function action_index()
     {
         $data = $this->model->getData();
-        $login = $this->model->getLogin($data);
-        $errors = $this->model->getErrors($data);
-        $email = $this->model->getEmail($data);
-
+        
         $this->view->generate('reg_view.twig',
             array(
                 'title' => 'Регистрация',
-                'login' => $login,
-                'errors' => $errors,
-                'email' => $email,
+                'login' => $data['login'],
+                'errors' => $data['errors'],
+                'email' => $data['email'],
                 'register' => 'active'
             )
         );

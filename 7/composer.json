@@ -2,6 +2,9 @@
     "require": {
         "twig/twig": "^2.3",
         "phpmailer/phpmailer": "^5.2",
-        "google/recaptcha": "^1.1"
+        "google/recaptcha": "^1.1",
+        "illuminate/database": "^5.4",
+        "fzaninotto/faker": "^1.6",
+        "intervention/image": "^2.3"
     }
 }
