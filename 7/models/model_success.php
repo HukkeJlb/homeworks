@@ -27,6 +27,26 @@ class Success extends Model
             $age = $_POST['age'];
             $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
 
+            if (empty($errors)) {
+                $gump = new GUMP();
+                $_POST = $gump->sanitize($_POST);
+
+                $gump->validation_rules(array(
+                    'description' => 'required|min_len,50',
+                ));
+                $gump->filter_rules(array(
+                    'description' => 'trim|sanitize_string',
+                ));
+                $validatedData = $gump->run($_POST);
+
+                if ($validatedData === false) {
+                    $validationResult = $gump->get_errors_array();
+                    foreach ($validationResult as $error) {
+                        $errors[] = $error;
+                    }
+                }
+            }
+
             if (empty($photo['name'])) {
                 $sql_photo = "SELECT photo FROM `users` WHERE id = $_SESSION[userid]";
                 $result = $db->query($sql_photo);

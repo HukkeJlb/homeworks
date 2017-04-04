@@ -16,6 +16,8 @@ class Register extends Model
             $recaptcha = new \ReCaptcha\ReCaptcha($secret);
             $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
+            $ip = $_SERVER['REMOTE_ADDR'];
+
             if (isset($_POST['login'])) {
                 $login = $_POST['login'];
                 $login = stripslashes($login);
@@ -46,6 +48,31 @@ class Register extends Model
                 $errors[] = 'Подтвердите, что вы не робот!';
             }
 
+
+            if (empty($errors)) {
+                $gump = new GUMP();
+                $_POST = $gump->sanitize($_POST);
+
+                $gump->validation_rules(array(
+                    'login' => 'required|min_len,5',
+                    'password' => 'required|max_len,25|min_len,3',
+                    'email' => 'required|valid_email',
+                ));
+                $gump->filter_rules(array(
+                    'login' => 'trim|sanitize_string',
+                    'password' => 'trim',
+                    'email' => 'trim|sanitize_email',
+                ));
+                $validatedData = $gump->run($_POST);
+
+                if ($validatedData === false) {
+                    $validationResult = $gump->get_errors_array();
+                    foreach ($validationResult as $error) {
+                        $errors[] = $error;
+                    }
+                }
+            }
+
             if (empty($errors)) {
                 if (empty($login) || empty($password) || empty($_POST['verification']) || empty($email)) {
                     $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
@@ -67,7 +94,7 @@ class Register extends Model
                 }
             }
             if (empty($errors)) {
-                $sql2 = "INSERT INTO users (login,password) VALUES(\"$login\",\"$hashedpassword\")";
+                $sql2 = "INSERT INTO users (login,password,ipv4) VALUES(\"$login\",\"$hashedpassword\",\"$ip\")";
                 $result2 = mysqli_query($db, $sql2);
                 if ($result2) {
                     header('HTTP/1.1 200 OK');
@@ -118,5 +145,50 @@ class Register extends Model
         }
 
     }
+
+//    private static function Validate()
+//    {
+//        $gump = new GUMP();
+//        $_POST = $gump->sanitize($_POST);
+//
+//        $gump->validation_rules(array(
+//            'login' => 'required|min_len,5',
+//            'password' => 'required|max_len,25|min_len,3',
+//            'email' => 'required|valid_email',
+//        ));
+//        $gump->filter_rules(array(
+//            'login' => 'trim|sanitize_string',
+//            'password' => 'trim',
+//            'email' => 'trim|sanitize_email',
+//        ));
+//        $validatedData = $gump->run($_POST);
+//
+//        if ($validatedData === false) {
+//            $validationResult = $gump->get_errors_array();
+//            foreach ($validationResult as $error) {
+//                $errors[] = $error;
+//            }
+//        }
+
+//        $validationArray = [
+//            'login' => $login,
+//            'email' => $email,
+//            'ip' => $ip
+//        ];
+//
+//        $validationResult = GUMP::is_valid($validationArray,[
+//            'login' => 'required|min_len,5',
+//            'email' => 'required|valid_email',
+//            'ip' => 'required|valid_ipv4',
+//        ]);
+//
+//        if($validationResult === true){
+//            //continue
+//        } else {
+//            foreach ($validationResult as $error) {
+//                $errors[] = $error;
+//            }
+//        }
+//    }
 
 }
