@@ -13,4 +13,11 @@ class Task extends Model
         return $taskList;
     }
 
+    public function rotateImg($degrees)
+    {
+        $source = imagecreatefromjpeg(ROOT."/photos/before.jpg");
+        $rotate = imagerotate($source, $degrees, 0);
+        imagejpeg($rotate, ROOT."/photos/after.jpg");
+    }
+
 }

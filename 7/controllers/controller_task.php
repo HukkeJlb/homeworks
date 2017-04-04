@@ -12,6 +12,7 @@ class Controller_Task extends Controller
     public function action_index()
     {
         $data = $this->model->getData();
+        $this->model->rotateImg(45);
 
         $this->view->generate('task_view.twig',
             array(

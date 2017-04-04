@@ -17,9 +17,9 @@ function tab($data)
             if ($key2 == 'Фотография') {
                 $ret .= "<td><img src='photos/$val2' height='100px'></td>";
             }
-//            elseif ($key2 == 'id') {
-
-//            }
+            elseif ($key2 == 'Описание') {
+                $ret .= '<td width="400">' . $val2 . '</td>';
+            }
             else {
                 $ret .= '<td>' . $val2 . '</td>';
             }
