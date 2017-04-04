@@ -14,6 +14,7 @@ class Controller_Register extends Controller
         
         $this->view->generate('reg_view.twig',
             array(
+                'notauthorized' => 'y',
                 'title' => 'Регистрация',
                 'login' => $data['login'],
                 'errors' => $data['errors'],

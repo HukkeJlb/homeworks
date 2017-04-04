@@ -6,6 +6,7 @@ class Controller_Main extends Controller
     {
         $this->view->generate('base_view.twig',
             array(
+                'notauthorized' => 'y',
                 'title'   => 'Главная страница',
                 'content' => 'Главная страница'
             ));

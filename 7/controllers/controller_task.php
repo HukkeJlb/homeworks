@@ -15,6 +15,7 @@ class Controller_Task extends Controller
 
         $this->view->generate('task_view.twig',
             array(
+                'notauthorized' => 'y',
                 'title' => 'Задание',
                 'data' => $data,
                 'task' => 'active'

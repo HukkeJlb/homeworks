@@ -21,9 +21,15 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                {% if authorized  %}
+                    <li {% if success %} class="active" {% endif %}><a href="success">Личный кабинет</a></li>
+                    <li><a href="logout">Выход</a></li>
+                {% endif %}
+                {% if notauthorized %}
                 <li {% if auth %} class="active" {% endif %}><a href="login">Авторизация</a></li>
                 <li {% if register %} class="active" {% endif %}><a href="register">Регистрация</a></li>
                 <li {% if task %} class="active" {% endif %}><a href="task">Задание</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

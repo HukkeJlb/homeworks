@@ -15,6 +15,7 @@ class Controller_Login extends Controller
 
         $this->view->generate('login_view.twig',
             array(
+                'notauthorized' => 'y',
                 'title' => 'Авторизация',
                 'login' => $data['login'],
                 'errors' => $data['errors'],
