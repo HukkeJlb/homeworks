@@ -13,6 +13,7 @@ class Controller_Task extends Controller
     {
         $data = $this->model->getData();
         $this->model->rotateImg(45);
+        $this->model->addWatermark();
 
         $this->view->generate('task_view.twig',
             array(
