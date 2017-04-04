@@ -32,4 +32,20 @@ class Task extends Model
         imagepng($image, ROOT . "/photos/imageWithWatermark.png");
     }
 
+    public function resizeImage($width, $height)
+    {
+        $image = imagecreatefrompng(ROOT . "/photos/imageWithWatermark.png");
+        $newImage = imagecreatetruecolor($width, $height);
+        imagecopyresampled($newImage, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image));
+        imagepng($newImage, ROOT . "/photos/newImageWithWatermark.png");
+    }
+
+    public function resizeToWidth($width)
+    {
+        $image = imagecreatefrompng(ROOT . "/photos/imageWithWatermark.png");
+        $ratio = $width / imagesx($image);
+        $height = imagesy($image) * $ratio;
+        $this->resizeImage($width, $height);
+    }
+
 }
