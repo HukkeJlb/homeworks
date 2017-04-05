@@ -73,7 +73,7 @@ class GUMP
 
     // ** ------------------------- Validation Helpers ---------------------------- ** //
 
-    public function __construct($lang = 'en')
+    public function __construct($lang = 'ru')
     {
         if ($lang) {
             $lang_file = __DIR__.DIRECTORY_SEPARATOR.'lang'.DIRECTORY_SEPARATOR.$lang.'.php';

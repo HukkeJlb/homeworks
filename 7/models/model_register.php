@@ -9,6 +9,7 @@ class Register extends Model
         $errors = [];
         $login = '';
         $email = '';
+        $ip = $_SERVER['REMOTE_ADDR'];
         $db = Db::getConnection();
         $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
 
@@ -16,7 +17,6 @@ class Register extends Model
             $recaptcha = new \ReCaptcha\ReCaptcha($secret);
             $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
-            $ip = $_SERVER['REMOTE_ADDR'];
 
             if (isset($_POST['login'])) {
                 $login = $_POST['login'];
@@ -57,6 +57,7 @@ class Register extends Model
                     'login' => 'required|min_len,5',
                     'password' => 'required|max_len,25|min_len,3',
                     'email' => 'required|valid_email',
+                    'ip' => 'required|valid_ipv4',
                 ));
                 $gump->filter_rules(array(
                     'login' => 'trim|sanitize_string',
@@ -109,7 +110,8 @@ class Register extends Model
         $data = [
             'login' => $login,
             'errors' => $errors,
-            'email' => $email
+            'email' => $email,
+            'ip' => $ip
         ];
         return $data;
     }

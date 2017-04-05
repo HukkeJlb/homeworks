@@ -19,6 +19,7 @@ class Controller_Register extends Controller
                 'login' => $data['login'],
                 'errors' => $data['errors'],
                 'email' => $data['email'],
+                'ip' => $data['ip'],
                 'register' => 'active'
             )
         );
