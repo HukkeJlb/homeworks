@@ -1,4 +1,5 @@
 <?php
+use Intervention\Image\ImageManagerStatic as Image;
 
 class Success extends Model
 {
@@ -59,7 +60,8 @@ class Success extends Model
                 if (($expansion == '.jpg') || ($expansion == '.png') || ($expansion == '.bmp')) {
                     $file_path = $dir . '/' . $_SESSION['userid'] . '.jpg';
                     $file_name = $_SESSION['userid'] . '.jpg';
-                    $result = move_uploaded_file($photo['tmp_name'], $file_path);
+                    move_uploaded_file($photo['tmp_name'], $file_path);
+                    Image::make("$file_path")->resize(480,480)->save("$file_path", 100);
                 } else {
                     $errors[] = 'Ошибка при загрузке файла. Ожидаемое расширение файла ".jpg", ".png", ".bmp"';
                 }
