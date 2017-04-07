@@ -8,15 +8,11 @@ class Success extends Model
     {
         $errors = [];
         $messages = [];
-        $db = Db::getConnection();
-
-        //обращение к БД за данными юзера
-        $sql = "SELECT name, age, description FROM `users` WHERE id = $_SESSION[userid]";
-        $result = $db->query($sql);
-        $array = $result->fetch_all(MYSQLI_ASSOC);
-        $name = $array[0]['name'];
-        $age = $array[0]['age'];
-        $description = $array[0]['description'];
+        
+        $user = User::find($_SESSION['userid']);
+        $name = $user->name;
+        $age = $user->age;
+        $description = $user->description;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $photo = $_FILES['photo'];
@@ -30,16 +26,7 @@ class Success extends Model
 
             if (empty($errors)) {
                 $gump = new GUMP();
-                $_POST = $gump->sanitize($_POST);
-
-                $gump->validation_rules(array(
-                    'description' => 'required|min_len,50',
-                ));
-                $gump->filter_rules(array(
-                    'description' => 'trim|sanitize_string',
-                ));
-                $validatedData = $gump->run($_POST);
-
+                $validatedData = self::validateInput($gump);
                 if ($validatedData === false) {
                     $validationResult = $gump->get_errors_array();
                     foreach ($validationResult as $error) {
@@ -49,10 +36,7 @@ class Success extends Model
             }
 
             if (empty($photo['name'])) {
-                $sql_photo = "SELECT photo FROM `users` WHERE id = $_SESSION[userid]";
-                $result = $db->query($sql_photo);
-                $file_name_array = $result->fetch_all();
-                $file_name = $file_name_array[0][0];
+                $file_name = $user->photo;
             } else {
                 $pattern = '|\.+[a-zA-Z0-9]+|i'; //|.*(\.)|
                 preg_match_all($pattern, $photo['name'], $photo1);
@@ -61,15 +45,14 @@ class Success extends Model
                     $file_path = $dir . '/' . $_SESSION['userid'] . '.jpg';
                     $file_name = $_SESSION['userid'] . '.jpg';
                     move_uploaded_file($photo['tmp_name'], $file_path);
-                    Image::make("$file_path")->resize(480,480)->save("$file_path", 100);
+                    Image::make("$file_path")->resize(480, 480)->save("$file_path", 100);
                 } else {
                     $errors[] = 'Ошибка при загрузке файла. Ожидаемое расширение файла ".jpg", ".png", ".bmp"';
                 }
             }
 
             if (empty($errors)) {
-                $sql = "UPDATE users SET name=\"$name\", age=\"$age\", description=\"$description\", photo=\"$file_name\"WHERE id=$_SESSION[userid]";
-                $result = $db->query($sql);
+                $result = $user->updatePersonalInfo($name, $age, $description, $file_name);
                 if ($result) {
                     $messages[] = 'Данные успешно обновлены';
                 }
@@ -83,6 +66,20 @@ class Success extends Model
             'description' => $description
         ];
         return $data;
+    }
+
+    private static function validateInput($gump)
+    {
+        $_POST = $gump->sanitize($_POST);
+
+        $gump->validation_rules(array(
+            'description' => 'required|min_len,50',
+        ));
+        $gump->filter_rules(array(
+            'description' => 'trim|sanitize_string',
+        ));
+
+        return $gump->run($_POST);
     }
 
 }

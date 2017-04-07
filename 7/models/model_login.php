@@ -4,9 +4,9 @@ class Login extends Model
 {
     public function getData()
     {
+        $user = new User;
         $login = '';
         $errors = '';
-        $db = Db::getConnection();
         $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
@@ -41,18 +41,14 @@ class Login extends Model
             if (empty($errors)) {
                 $salt = 'stfu228solo322';
                 $hashedpassword = crypt($password, $salt);
-                $sql = "SELECT id FROM users WHERE BINARY login=\"$login\" AND BINARY password=\"$hashedpassword\"";
-                $result = $db->query($sql);
-                $check = $result->fetch_all(MYSQLI_ASSOC);
-                if (!$check) {
+                $userId = $user->login($login, $hashedpassword);
+                if ($userId == NULL) {
                     $errors[] = 'Неверный логин или пароль';
                 }
-                if (empty($errors)) {
-                    $_SESSION['userid'] = $check[0]['id'];
-                }
-
             }
+            
             if (empty($errors)) {
+                $_SESSION['userid'] = $userId;
                 $_SESSION['login'] = $login;
                 header('Location: http://' . $_SERVER['HTTP_HOST'] . "/success");
             }

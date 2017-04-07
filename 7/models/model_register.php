@@ -5,12 +5,11 @@ class Register extends Model
 
     public function getData()
     {
-
+        $user = new User;
         $errors = [];
         $login = '';
         $email = '';
         $ip = $_SERVER['REMOTE_ADDR'];
-        $db = Db::getConnection();
         $secret = '6Le4HRsUAAAAAOIUN0i8j9IpUEtemWiSANQRKRct';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,24 +47,9 @@ class Register extends Model
                 $errors[] = 'Подтвердите, что вы не робот!';
             }
 
-
             if (empty($errors)) {
                 $gump = new GUMP();
-                $_POST = $gump->sanitize($_POST);
-
-                $gump->validation_rules(array(
-                    'login' => 'required|min_len,5',
-                    'password' => 'required|max_len,25|min_len,3',
-                    'email' => 'required|valid_email',
-                    'ip' => 'required|valid_ipv4',
-                ));
-                $gump->filter_rules(array(
-                    'login' => 'trim|sanitize_string',
-                    'password' => 'trim',
-                    'email' => 'trim|sanitize_email',
-                ));
-                $validatedData = $gump->run($_POST);
-
+                $validatedData = self::validateInput($gump);
                 if ($validatedData === false) {
                     $validationResult = $gump->get_errors_array();
                     foreach ($validationResult as $error) {
@@ -81,11 +65,8 @@ class Register extends Model
             }
 
             if (empty($errors)) {
-                // проверка на существование пользователя с таким же логином
-                $sql = "SELECT id FROM users WHERE login=\"$login\"";
-                $result = $db->query($sql);
-                $check_login = mysqli_fetch_array($result);
-                if (!empty($check_login['id'])) {
+                $checkLogin = $user->checkLoginExistence($login);
+                if (!empty($checkLogin)) {
                     $errors[] = 'Извините, введённый вами логин уже зарегистрирован. Введите другой логин.';
                 }
             }
@@ -95,12 +76,11 @@ class Register extends Model
                 }
             }
             if (empty($errors)) {
-                $sql2 = "INSERT INTO users (login,password,ipv4) VALUES(\"$login\",\"$hashedpassword\",\"$ip\")";
-                $result2 = mysqli_query($db, $sql2);
-                if ($result2) {
+                $registration = $user->registerNewUser($login, $hashedpassword, $ip);
+                if ($registration == true) {
                     header('HTTP/1.1 200 OK');
                     header('Location: http://' . $_SERVER['HTTP_HOST'] . "/login");
-                    $this->sendMail($email, $login);
+                    self::sendMail($email, $login);
                     exit;
                 } else {
                     $errors[] = 'Ошибка! Вы не зарегистрированы.';
@@ -116,7 +96,7 @@ class Register extends Model
         return $data;
     }
 
-    public function sendMail($email, $login)
+    private function sendMail($email, $login)
     {
         $mail = new PHPMailer;
 
@@ -148,49 +128,23 @@ class Register extends Model
 
     }
 
-//    private static function Validate()
-//    {
-//        $gump = new GUMP();
-//        $_POST = $gump->sanitize($_POST);
-//
-//        $gump->validation_rules(array(
-//            'login' => 'required|min_len,5',
-//            'password' => 'required|max_len,25|min_len,3',
-//            'email' => 'required|valid_email',
-//        ));
-//        $gump->filter_rules(array(
-//            'login' => 'trim|sanitize_string',
-//            'password' => 'trim',
-//            'email' => 'trim|sanitize_email',
-//        ));
-//        $validatedData = $gump->run($_POST);
-//
-//        if ($validatedData === false) {
-//            $validationResult = $gump->get_errors_array();
-//            foreach ($validationResult as $error) {
-//                $errors[] = $error;
-//            }
-//        }
+    private static function validateInput($gump)
+    {
+        $_POST = $gump->sanitize($_POST);
 
-//        $validationArray = [
-//            'login' => $login,
-//            'email' => $email,
-//            'ip' => $ip
-//        ];
-//
-//        $validationResult = GUMP::is_valid($validationArray,[
-//            'login' => 'required|min_len,5',
-//            'email' => 'required|valid_email',
-//            'ip' => 'required|valid_ipv4',
-//        ]);
-//
-//        if($validationResult === true){
-//            //continue
-//        } else {
-//            foreach ($validationResult as $error) {
-//                $errors[] = $error;
-//            }
-//        }
-//    }
+        $gump->validation_rules(array(
+            'login' => 'required|min_len,5',
+            'email' => 'required|valid_email',
+            'password' => 'required|max_len,25|min_len,3',
+            'ip' => 'required|valid_ipv4',
+        ));
+        $gump->filter_rules(array(
+            'login' => 'trim|sanitize_string',
+            'password' => 'trim',
+            'email' => 'trim|sanitize_email',
+        ));
+
+        return $gump->run($_POST);
+    }
 
 }
