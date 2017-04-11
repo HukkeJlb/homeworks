@@ -16,33 +16,6 @@ class Register extends Model
             $recaptcha = new \ReCaptcha\ReCaptcha($secret);
             $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 
-
-            if (isset($_POST['login'])) {
-                $login = $_POST['login'];
-                $login = stripslashes($login);
-                $login = htmlspecialchars($login);
-                $login = trim($login);
-            }
-
-            if (isset($_POST['email'])) {
-                $email = $_POST['email'];
-                $email = stripslashes($email);
-                $email = htmlspecialchars($email);
-                $email = trim($email);
-            }
-
-            if (isset($_POST['password'])) {
-                $password = $_POST['password'];
-                $password = stripslashes($password);
-                $password = htmlspecialchars($password);
-                $password = trim($password);
-                $salt = 'stfu228solo322';
-                $hashedpassword = crypt($password, $salt);
-                if ($hashedpassword == '') {
-                    unset($hashedpassword);
-                }
-            }
-
             if (empty ($_POST['g-recaptcha-response'])) {
                 $errors[] = 'Подтвердите, что вы не робот!';
             }
@@ -58,6 +31,24 @@ class Register extends Model
                 }
             }
 
+            if (empty($errors)) {
+                if (isset($_POST['login'])) {
+                    $login = $_POST['login'];
+                }
+
+                if (isset($_POST['email'])) {
+                    $email = $_POST['email'];
+                }
+
+                if (isset($_POST['password'])) {
+                    $password = $_POST['password'];
+                    $salt = 'stfu228solo322';
+                    $hashedpassword = crypt($password, $salt);
+                    if ($hashedpassword == '') {
+                        unset($hashedpassword);
+                    }
+                }
+            }
             if (empty($errors)) {
                 if (empty($login) || empty($password) || empty($_POST['verification']) || empty($email)) {
                     $errors[] = 'Вы ввели не всю информацию. Заполните все поля!';
@@ -140,7 +131,7 @@ class Register extends Model
         ));
         $gump->filter_rules(array(
             'login' => 'trim|sanitize_string',
-            'password' => 'trim',
+            'password' => 'trim|sanitize_string',
             'email' => 'trim|sanitize_email',
         ));
 

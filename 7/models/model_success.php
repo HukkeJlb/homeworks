@@ -20,19 +20,19 @@ class Success extends Model
             if (!file_exists($dir)) {
                 mkdir($dir, 0777);
             }
-            $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-            $age = $_POST['age'];
-            $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
+            $gump = new GUMP();
+            $validatedData = self::validateInput($gump);
+            if ($validatedData === false) {
+                $validationResult = $gump->get_errors_array();
+                foreach ($validationResult as $error) {
+                    $errors[] = $error;
+                }
+            }
 
             if (empty($errors)) {
-                $gump = new GUMP();
-                $validatedData = self::validateInput($gump);
-                if ($validatedData === false) {
-                    $validationResult = $gump->get_errors_array();
-                    foreach ($validationResult as $error) {
-                        $errors[] = $error;
-                    }
-                }
+                $name = $_POST['name'];
+                $age = $_POST['age'];
+                $description = $_POST['description'];
             }
 
             if (empty($photo['name'])) {
@@ -75,10 +75,11 @@ class Success extends Model
         $gump->validation_rules(array(
             'description' => 'required|min_len,50',
         ));
+
         $gump->filter_rules(array(
             'description' => 'trim|sanitize_string',
+            'name' => 'trim|sanitize_string',
         ));
-
         return $gump->run($_POST);
     }
 

@@ -3,6 +3,7 @@ require './vendor/autoload.php';
 require './ClassVk.php';
 define("MY_ID", "14422329");
 $message = '';
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     move_uploaded_file($_FILES['photo']['tmp_name'], 'photo.jpg');
@@ -31,9 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     $api->vkRequest('wall.post', $optionsWall);
     $api->toArray();
-    $result = $api->ArrayInJson['response']['post_id'];
-    if ($result) {
-        $message = 'Фотография была успешна отправлена';
+    if (isset($api->ArrayInJson['response'])){
+        $result = $api->ArrayInJson['response']['post_id'];
+        if ($result) {
+            $message = 'Фотография была успешна отправлена';
+        }
+    } else {
+        $error = $api->ArrayInJson['error']['error_msg'];
     }
 }
 ?>
@@ -56,6 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if ($message): ?>
                 <div class="alert alert-success">
                     <strong>Успех:</strong> <?php echo $message; ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($error): ?>
+                <div class="alert alert-danger">
+                    <strong>Неудача:</strong> <?php echo $error; ?>
                 </div>
             <?php endif; ?>
             <div class="form-group col-sm-12">
