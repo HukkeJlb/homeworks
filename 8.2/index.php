@@ -9,9 +9,19 @@
 </head>
 <body>
 <h2 align="center">Отправляем фото на стену в ВК</h2>
+
 <div class="form-container reg">
     <form class="col-sm-6" action="vk.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
+<!--            <div class="alert alert-success">-->
+<!--                <strong>Успех!</strong> Фотография была успешна отправлена!-->
+<!--            </div>-->
+            <div class="form-group col-sm-12">
+                <label for="vk_id" class="col-sm-4 control-label">ID получателя</label>
+                <div class="col-sm-8">
+                    <input type="text" name="vk_id" class="form-control" id="vk_id" placeholder="Введите ID получателя">
+                </div>
+            </div>
             <div class="form-group col-sm-12">
                 <label for="name" class="col-sm-4 control-label">Выбрать фотографию</label>
                 <div class="col-sm-8">

@@ -2,7 +2,7 @@
 class VkApi
 {
     public $myID  = '5977332';
-    public $token = '7e04d9c94960951bb4988ea5c4db8f363e54ffcf42553b781563f73ae2f9999c5c21248269c3c11b7c1e4';
+    public $token = 'bf3d9f4cffd66709ca9aec43d3e3222675b91c6d38b2e689cf87212546903552b5ef7a81e7c6756de5c00';
 
     public $responseJson;
     public $requestDowl;
@@ -18,7 +18,7 @@ class VkApi
     //метод для загрузки картики на сервер VK
     public function downloadServer($link, $nameFile)
     {
-        $cfile = curl_file_create($nameFile, 'image/jpeg', 'test_name.jpg');
+        $cfile = curl_file_create($nameFile, 'image/jpeg', $nameFile);
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -27,6 +27,7 @@ class VkApi
             CURLOPT_POSTFIELDS     => array("photo" => $cfile)
         ));
         $this->requestDowl = json_decode(curl_exec($curl));
+        unlink($nameFile);
     }
     //Работаем только с массивом,преобразуем в массив
     public function toArray(){
