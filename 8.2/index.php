@@ -1,3 +1,43 @@
+<?php
+require './vendor/autoload.php';
+require './ClassVk.php';
+define("MY_ID", "14422329");
+$message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    move_uploaded_file($_FILES['photo']['tmp_name'], 'photo.jpg');
+
+    $api = new VkApi();
+    
+    $api->vkRequest('photos.getWallUploadServer');//Получние ссылку от сервара для загрузки
+
+    $linkForDownload = $api->toArray()['response']['upload_url'];
+
+    $api->downloadServer($linkForDownload, dirname(__FILE__) . '/photo.jpg');
+
+//по ссылке от отсылаем запросы
+    $api->vkRequest('photos.saveWallPhoto', [
+        'user_id' => MY_ID,
+        'photo' => $api->requestDowl->photo,
+        'server' => $api->requestDowl->server,
+        'hash' => $api->requestDowl->hash,
+    ]);
+    $api->toArray();
+
+    $optionsWall = array(
+        'owner_id' => $_POST['vk_id'],//куда отправляем
+        'message' => 'ДЗ №8 - loftschool',//текст
+        'attachments' => $api->ArrayInJson['response'][0]['id'],//что отправить
+    );
+    $api->vkRequest('wall.post', $optionsWall);
+    $api->toArray();
+    $result = $api->ArrayInJson['response']['post_id'];
+    if ($result) {
+        $message = 'Фотография была успешна отправлена';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +51,13 @@
 <h2 align="center">Отправляем фото на стену в ВК</h2>
 
 <div class="form-container reg">
-    <form class="col-sm-6" action="vk.php" method="post" enctype="multipart/form-data">
+    <form class="col-sm-6" method="post" enctype="multipart/form-data">
         <div class="form-group">
-<!--            <div class="alert alert-success">-->
-<!--                <strong>Успех!</strong> Фотография была успешна отправлена!-->
-<!--            </div>-->
+            <?php if ($message): ?>
+                <div class="alert alert-success">
+                    <strong>Успех:</strong> <?php echo $message; ?>
+                </div>
+            <?php endif; ?>
             <div class="form-group col-sm-12">
                 <label for="vk_id" class="col-sm-4 control-label">ID получателя</label>
                 <div class="col-sm-8">
