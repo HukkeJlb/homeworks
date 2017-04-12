@@ -30,9 +30,9 @@ class Success extends Model
             }
 
             if (empty($errors)) {
-                $name = $_POST['name'];
-                $age = $_POST['age'];
-                $description = $_POST['description'];
+                $name = $validatedData['name'];
+                $age = $validatedData['age'];
+                $description = $validatedData['description'];
             }
 
             if (empty($photo['name'])) {
@@ -77,8 +77,8 @@ class Success extends Model
         ));
 
         $gump->filter_rules(array(
-            'description' => 'trim|sanitize_string',
-            'name' => 'trim|sanitize_string',
+            'description' => 'sanitize_string|trim',
+            'name' => 'sanitize_string|trim',
         ));
         return $gump->run($_POST);
     }

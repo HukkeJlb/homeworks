@@ -33,15 +33,15 @@ class Register extends Model
 
             if (empty($errors)) {
                 if (isset($_POST['login'])) {
-                    $login = $_POST['login'];
+                    $login = $validatedData['login'];
                 }
 
                 if (isset($_POST['email'])) {
-                    $email = $_POST['email'];
+                    $email = $validatedData['email'];
                 }
 
                 if (isset($_POST['password'])) {
-                    $password = $_POST['password'];
+                    $password = $validatedData['password'];
                     $salt = 'stfu228solo322';
                     $hashedpassword = crypt($password, $salt);
                     if ($hashedpassword == '') {
