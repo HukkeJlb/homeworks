@@ -23,17 +23,13 @@ class Category extends Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
 
-    public function goods()
-    {
-        return $this->hasMany('Good', 'category_id');
-    }
+//    public function goods()
+//    {
+//        return $this->hasMany('Good', 'category_id', 'id');
+//    }
 }
 
 class Good extends Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
-    public function categories()
-    {
-        return $this->belongsTo('Category');
-    }
 }
