@@ -1,5 +1,4 @@
 <?php
-require './vendor/autoload.php';
 require './ClassVk.php';
 define("MY_ID", "14422329");
 $message = '';

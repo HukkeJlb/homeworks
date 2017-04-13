@@ -1,6 +1,0 @@
-{
-    "require": {
-        "johndoejdg/vkontakte-php-sdk": "^2.0",
-        "curl/curl": "^1.6"
-    }
-}
