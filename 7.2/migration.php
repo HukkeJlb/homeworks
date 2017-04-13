@@ -11,8 +11,10 @@ Capsule::schema()->create('categories', function ($table) {
 Capsule::schema()->create('goods', function ($table) {
     $table->increments('id');
     $table->integer('category_id')->unsigned();
+    $table->foreign('category_id')->references('id')->on('categories');
     $table->integer('article')->nullable();
     $table->string('name')->nullable();
+    $table->string('brand')->nullable();
     $table->text('description')->nullable();
     $table->float('price')->nullable();
     $table->string('discount')->default(0);

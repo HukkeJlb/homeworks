@@ -18,3 +18,22 @@ $capsule->addConnection([
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
+
+class Category extends Illuminate\Database\Eloquent\Model
+{
+    public $timestamps = false;
+
+    public function goods()
+    {
+        return $this->hasMany('Good', 'category_id');
+    }
+}
+
+class Good extends Illuminate\Database\Eloquent\Model
+{
+    public $timestamps = false;
+    public function categories()
+    {
+        return $this->belongsTo('Category');
+    }
+}
