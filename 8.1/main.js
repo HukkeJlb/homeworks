@@ -9,7 +9,7 @@ button.on('click', function () {
     }).done(function (table) {
         goods = '<table class="table table-bordered"><tr><th>Категория</th><th>Артикул</th><th>Название</th><th>Бренд</th><th>Описание</th><th>Цена</th><th width="90">Скидка, %</th><th>Количество покупок</th></tr>';
         for (var key = 0; key < table.length; key++) {
-            goods += '<td>' + table[key].NAME + '</td>';
+            goods += '<td>' + table[key].category.name + '</td>';
             goods += '<td>' + table[key].article + '</td>';
             goods += '<td>' + table[key].name + '</td>';
             goods += '<td>' + table[key].brand + '</td>';
