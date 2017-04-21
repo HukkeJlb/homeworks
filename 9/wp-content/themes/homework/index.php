@@ -2,7 +2,13 @@
     <div class="main-content">
         <div class="content-wrapper">
             <div class="content">
-                <h1 class="title-page">Последние новости и акции из мира туризма</h1>
+                <?php
+                if ($_SERVER['REQUEST_URI'] == '/') {
+                    echo '<h1 class="title-page">Последние новости и акции из мира туризма</h1>';
+                } else {
+                    echo '<h1 class="title-page">' . category_description() . '</h1>';
+                }
+                ?>
                 <div class="posts-list">
                     <?php
                     if ( have_posts() ) :
@@ -12,15 +18,24 @@
                                 <div class="post-thumbnail"><img src="<?php echo get_thumbnail() ?>" alt="Image поста" class="post-thumbnail__image"></div>
                                 <div class="post-content">
                                     <div class="post-content__post-info">
-                                        <div class="post-date"><?php echo $post->post_date ?></div>
+                                        <div class="post-date"><?php echo the_time('F j, Y G:i') ?></div>
                                     </div>
                                     <div class="post-content__post-text">
+                                        <?php if(in_category('special-offers')) : ?>
+                                        <div class="offer-title">
+                                            <?php the_title(); ?>
+                                        </div>
+                                        <div class="offer-desc">
+                                            <?php echo get_field('shortdesc'); ?>
+                                        </div>
+                                        <?php else : ?>
                                         <div class="post-title">
                                             <?php the_title(); ?>
                                         </div>
                                         <p>
                                             <?php the_excerpt(); ?>
                                         </p>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="post-content__post-control"><a href="<?php the_permalink(); ?>" class="btn-read-post">Читать далее >></a></div>
                                 </div>
@@ -33,7 +48,8 @@
 
                     <!-- post-mini_end-->
                 </div>
-                <div class="pagenavi-post-wrap"><a href="#" class="pagenavi-post__prev-postlink"><i class="icon icon-angle-double-left"></i></a><span class="pagenavi-post__current">1</span><a href="#" class="pagenavi-post__page">2</a><a href="#" class="pagenavi-post__page">3</a><a href="#" class="pagenavi-post__page">...</a><a href="#" class="pagenavi-post__page">10</a><a href="#" class="pagenavi-post__next-postlink"><i class="icon icon-angle-double-right"></i></a></div>
+<!--                --><?php //my_pagenavi(); ?>
+                <div class="pagenavi-post-wrap"><?php my_pagenavi(); ?></div>
             </div>
             <!-- sidebar-->
             <?php get_template_part('_parts/sidebar'); ?>
