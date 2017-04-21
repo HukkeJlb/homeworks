@@ -16,7 +16,7 @@
 </div>
 <!-- wrapper_end-->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="/js/main.js"></script>
+<script src="/wp-content/themes/homework/js/main.js"></script>
 <?php wp_footer(); ?>
 </body>
 </html>
