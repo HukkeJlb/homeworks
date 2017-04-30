@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content-top">
-    <div class="slider"><img src="img/slider.png" alt="Image" class="image-main"></div>
+    <div class="slider"><img src="{{ asset('img/slider.png') }}" alt="Image" class="image-main"></div>
 </div>
 <div class="content-middle">
     <div class="content-head__container">
@@ -11,9 +11,10 @@
         </div>
         <div class="content-head__search-block">
             <div class="search-container">
-                <form class="search-container__form">
-                    <input type="text" class="search-container__form__input">
-                    <button class="search-container__form__btn">Поиск по сайту</button>
+                <form class="search-container__form" action="/search" method="post">
+                    {{csrf_field()}}
+                    <input type="text" class="search-container__form__input" name="keyword">
+                    <button type="submit" class="search-container__form__btn">Поиск по товарам</button>
                 </form>
             </div>
         </div>

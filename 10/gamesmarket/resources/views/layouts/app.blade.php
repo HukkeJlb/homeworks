@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
   <head>
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @if (isset($title_page))
+    <title>{{$title_page}} | {{ config('app.name', 'Laravel') }}</title>
+    @else
+      <title>{{ config('app.name', 'Laravel') }}</title>
+    @endif
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/libs.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="{{ asset('css/libs.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/media.css') }}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
       window.Laravel = {!! json_encode([
@@ -23,11 +25,11 @@
   <body>
     <div class="main-wrapper">
       <header class="main-header">
-        <div class="logotype-container"><a href="/" class="logotype-link"><img src="img/logo.png" alt="Логотип"></a></div>
+        <div class="logotype-container"><a href="/" class="logotype-link"><img src="{{ asset('img/logo.png') }}" alt="Логотип"></a></div>
         <nav class="main-navigation">
           <ul class="nav-list">
             <li class="nav-list__item"><a href="/" class="nav-list__item__link">Главная</a></li>
-            <li class="nav-list__item"><a href="/myorders" class="nav-list__item__link">Мои заказы</a></li>
+            @if (Auth::check())<li class="nav-list__item"><a href="/myorders" class="nav-list__item__link">Мои заказы</a></li>@endif
             <li class="nav-list__item"><a href="/news" class="nav-list__item__link">Новости</a></li>
             <li class="nav-list__item"><a href="/about" class="nav-list__item__link">О магазине</a></li>
           </ul>
@@ -46,13 +48,16 @@
             <div class="authorization-block"><a href="{{ route('register') }}" class="authorization-block__link">Регистрация</a><a href="{{ route('login') }}" class="authorization-block__link">Войти</a></div>
           @else
             <div class="authorization-block">
-              <a href="#" class="authorization-block__link" data-toggle="dropdown" role="button" aria-expanded="false">
+              <a href="/myorders" class="authorization-block__link" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{ Auth::user()->name }} <span class="caret"></span>
               </a>
+              @if(Auth::user()->is_admin)
+                <a href="/admin" class="authorization-block__link">Админка</a>
+              @endif
               <a href="{{ route('logout') }} " class="authorization-block__link"
                  onclick="event.preventDefault();
                  document.getElementById('logout-form').submit();">
-                Logout
+                Выйти
               </a>
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
@@ -67,11 +72,11 @@
             <div class="sidebar-item__title">Категории</div>
             <div class="sidebar-item__content">
               <ul class="sidebar-category">
-                <li class="sidebar-category__item"><a href="#" class="sidebar-category__item__link">Action</a></li>
-                <li class="sidebar-category__item"><a href="#" class="sidebar-category__item__link">RPG</a></li>
-                <li class="sidebar-category__item"><a href="#" class="sidebar-category__item__link">Квесты</a></li>
-                <li class="sidebar-category__item"><a href="#" class="sidebar-category__item__link">Онлайн-игры</a></li>
-                <li class="sidebar-category__item"><a href="#" class="sidebar-category__item__link">Стратегии</a></li>
+                @if (isset($categories))
+                @foreach($categories as $category)
+                  <li class="sidebar-category__item"><a href="/category/{{$category->id}}" class="sidebar-category__item__link">{{$category->name}}</a></li>
+                @endforeach
+                @endif
               </ul>
             </div>
           </div>
@@ -80,16 +85,16 @@
             <div class="sidebar-item__content">
               <div class="sidebar-news">
                 <div class="sidebar-news__item">
-                  <div class="sidebar-news__item__preview-news"><img src="img/cover/game-2.jpg" alt="image-new" class="sidebar-new__item__preview-new__image"></div>
-                  <div class="sidebar-news__item__title-news"><a href="#" class="sidebar-news__item__title-news__link">О новых играх в режиме VR</a></div>
-                </div>
-                <div class="sidebar-news__item">
-                  <div class="sidebar-news__item__preview-news"><img src="img/cover/game-1.jpg" alt="image-new" class="sidebar-new__item__preview-new__image"></div>
-                  <div class="sidebar-news__item__title-news"><a href="#" class="sidebar-news__item__title-news__link">О новых играх в режиме VR</a></div>
-                </div>
-                <div class="sidebar-news__item">
-                  <div class="sidebar-news__item__preview-news"><img src="img/cover/game-4.jpg" alt="image-new" class="sidebar-new__item__preview-new__image"></div>
-                  <div class="sidebar-news__item__title-news"><a href="#" class="sidebar-news__item__title-news__link">О новых играх в режиме VR</a></div>
+                  @if (isset($last_articles))
+                  @foreach($last_articles as $article)
+                    <div class="sidebar-news__item">
+                      @if($article->photo)
+                        <div class="sidebar-news__item__preview-news"><img src="/img/news/{{$article->photo}}" alt="image-new" class="sidebar-new__item__preview-new__image"></div>
+                      @endif
+                      <div class="sidebar-news__item__title-news"><a href="/article/{{$article->id}}" class="sidebar-news__item__title-news__link">{{$article->title}}</a></div>
+                    </div>
+                  @endforeach
+                  @endif
                 </div>
               </div>
             </div>
@@ -123,6 +128,7 @@
         </div>
       </footer>
     </div>
-    <script src="js/main.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="{{asset('js/main.js')}}"></script>
   </body>
 </html>

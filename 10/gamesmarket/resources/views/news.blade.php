@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="content-top">
-        <div class="slider"><img src="img/slider.png" alt="Image" class="image-main"></div>
+        <div class="slider"><img src="{{ asset('img/slider.png') }}" alt="Image" class="image-main"></div>
     </div>
     <div class="content-middle">
         <div class="content-head__container">
@@ -11,47 +11,33 @@
             </div>
             <div class="content-head__search-block">
                 <div class="search-container">
-                    <form class="search-container__form">
-                        <input type="text" class="search-container__form__input">
-                        <button class="search-container__form__btn">Поиск по сайту</button>
+                    <form class="search-container__form" action="/search" method="post">
+                        {{csrf_field()}}
+                        <input type="text" class="search-container__form__input" name="keyword">
+                        <button type="submit" class="search-container__form__btn">Поиск по товарам</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="content-main__container">
             <div class="news-list__container">
-                <div class="news-list__item">
-                    <div class="news-list__item__thumbnail"><img src="img/news/ps_vr.jpg"></div>
-                    <div class="news-list__item__content">
-                        <div class="news-list__item__content__news-title">О новых играх в режиме VR</div>
-                        <div class="news-list__item__content__news-date">04.12.2016</div>
-                        <div class="news-list__item__content__news-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                @foreach($articles as $article)
+                    <div class="news-list__item">
+                        <div class="news-list__item__thumbnail"><img src="img/news/{{$article->photo}}"></div>
+                        <div class="news-list__item__content">
+                            <div class="news-list__item__content__news-title">{{$article->title}}</div>
+                            <div class="news-list__item__content__news-date">{{$article->created_at}}</div>
+                            <div class="news-list__item__content__news-content">
+                                {{$article->text}}
+                            </div>
                         </div>
+                        <div class="news-list__item__content__news-btn-wrap"><a href="/article/{{$article->id}}" class="btn btn-brown">Подробнее</a></div>
                     </div>
-                    <div class="news-list__item__content__news-btn-wrap"><a href="#" class="btn btn-brown">Подробнее</a></div>
-                </div>
-                <div class="news-list__item">
-                    <div class="news-list__item__thumbnail"><img src="img/news/ps4-pro_01.jpg"></div>
-                    <div class="news-list__item__content">
-                        <div class="news-list__item__content__news-title">О новой PS4 Pro</div>
-                        <div class="news-list__item__content__news-date">04.12.2016</div>
-                        <div class="news-list__item__content__news-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </div>
-                    </div>
-                    <div class="news-list__item__content__news-btn-wrap"><a href="#" class="btn btn-brown">Подробнее</a></div>
-                </div>
+                @endforeach
             </div>
         </div>
+        <div class="content-footer__container">
+            {{ $articles->links('layouts.pagination') }}
+        </div>
     </div>
-    <div class="content-bottom"></div>
 @endsection

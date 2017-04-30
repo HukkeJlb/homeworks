@@ -927,6 +927,16 @@ img {
       font-weight: bold;
       line-height: 1.7rem;
       text-align: center; }
+    .page-nav__item__active {
+      display: block;
+      text-decoration: none;
+      font-family: "PT_Sans", sans-serif;
+      font-size: 1.7rem;
+      color: #d28324;
+      font-weight: bold;
+      line-height: 1.7rem;
+      text-align: center; }
+    }
       .page-nav__item__link:hover, .page-nav__item__link:focus, .page-nav__item__link--active {
         color: #d28324; }
 
