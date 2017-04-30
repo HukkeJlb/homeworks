@@ -29,7 +29,7 @@
                     <div class="product-container__content-text__price__value">
                         Цена: <b>{{$good->price}}</b>
                         руб
-                    </div><a class="popup-link btn btn-blue" href="">Купить</a>
+                    </div><a class="popup-link btn btn-blue" href="javascript:PopUpShow()">Купить</a>
                 </div>
                 <div class="product-container__content-text__description">
                     {{$good->description}}
@@ -37,16 +37,19 @@
             </div>
         </div>
     </div>
+
     <div class="popup-box" id="popup-box">
         <div class="close">X</div>
-        <div class="top"><h2>Оформить заказ на {{$good->name}}</h2></div>
+        <div class="top">
+            <h2>Для того, чтобы оформить заказ на {{$good->name}} оставьте, пожалуйста, свои контактные данные. Наши менеджеры с Вами свяжутся в ближайшее время.</h2>
+        </div>
         <div class="bottom">
-            <form id="order">
+            <form id="order" action="/orders/store" method="get">
                 {{csrf_field()}}
                 <input type="hidden" name="good_id" value="{{$good->id}}">
                 <input type="hidden" name="price" value="{{$good->price}}">
-                <input type="text" name="name" placeholder="Введите имя">
-                <input type="text" name="email" placeholder="Введите email" value="@if (Auth::check()){{ Auth::user()->email }}@endif">
+                <input type="text" name="name" class="search-container__form__input" placeholder="Введите имя" value="@if (Auth::check()){{ Auth::user()->name }}@endif">
+                <input type="text" name="email" class="search-container__form__input" placeholder="Введите email" value="@if (Auth::check()){{ Auth::user()->email }}@endif">
                 <input type="submit" class="btn btn-blue" value="Заказать">
                 <div id="er"></div>
             </form>

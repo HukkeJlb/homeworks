@@ -8,7 +8,7 @@
                     <div class="panel-heading"><h3>Статьи</h3></div>
                     <div><a href="/admin/articles/create" class="btn btn-primary">Создать</a></div>
                     <div class="panel-body">
-                        <table border="1">
+                        <table class="table table-bordered">
                         @foreach($articles as $article)
                         <tr>
                             <td><a href="/admin/articles/show/{{$article->id}}">{{$article->title}}</a></td>
@@ -24,7 +24,6 @@
                         @endforeach
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>

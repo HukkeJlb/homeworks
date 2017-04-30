@@ -39,11 +39,13 @@
         </div>
         <div class="header-container">
           <div class="payment-container">
+            @if (!Auth::guest())
             <div class="payment-basket__status">
               <div class="payment-basket__status__icon-block"><a class="payment-basket__status__icon-block__link"><i class="fa fa-shopping-basket"></i></a></div>
-              <div class="payment-basket__status__basket"><span class="payment-basket__status__basket-value">0</span><span class="payment-basket__status__basket-value-descr">товаров</span></div>
+              <div class="payment-basket__status__basket"><span class="payment-basket__status__basket-value">{{$countOrders}}</span><span class="payment-basket__status__basket-value-descr">товаров</span></div>
             </div>
           </div>
+          @endif
           @if (Auth::guest())
             <div class="authorization-block"><a href="{{ route('register') }}" class="authorization-block__link">Регистрация</a><a href="{{ route('login') }}" class="authorization-block__link">Войти</a></div>
           @else
@@ -52,7 +54,7 @@
                 {{ Auth::user()->name }} <span class="caret"></span>
               </a>
               @if(Auth::user()->is_admin)
-                <a href="/admin" class="authorization-block__link">Админка</a>
+                <a href="/admin" class="authorization-block__link">AdminPanel</a>
               @endif
               <a href="{{ route('logout') }} " class="authorization-block__link"
                  onclick="event.preventDefault();
@@ -121,9 +123,9 @@
         </div>
         <div class="footer__social-block">
           <ul class="social-block__list bcg-social">
-            <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i class="fa fa-facebook"></i></a></li>
-            <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i class="fa fa-twitter"></i></a></li>
-            <li class="social-block__list__item"><a href="#" class="social-block__list__item__link"><i class="fa fa-instagram"></i></a></li>
+            <li class="social-block__list__item"><a href="https://www.facebook.com" class="social-block__list__item__link"><i class="fa fa-facebook"></i></a></li>
+            <li class="social-block__list__item"><a href="https://twitter.com/" class="social-block__list__item__link"><i class="fa fa-twitter"></i></a></li>
+            <li class="social-block__list__item"><a href="https://www.youtube.com/" class="social-block__list__item__link"><i class="fa fa-instagram"></i></a></li>
           </ul>
         </div>
       </footer>

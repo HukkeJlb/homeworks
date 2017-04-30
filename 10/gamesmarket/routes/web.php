@@ -49,9 +49,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::delete('/admin/goods/destroy/{id}','GoodController@destroy');
     Route::post('/admin/goods/update/{id}','GoodController@update');
 
+    Route::get('/admin/orders','OrderController@index');
+
 });
 
-Route::get('/myorders', function () {
-    return view('myorders');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/myorders', 'FrontController@orders');
+    Route::get('/orders/store', 'OrderController@store');
 });
+
 

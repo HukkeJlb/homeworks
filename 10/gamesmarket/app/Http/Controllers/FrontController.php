@@ -12,6 +12,10 @@ class FrontController extends Controller
 {
     protected function dataForAllPages(&$data)
     {
+        if (!Auth::guest()){
+            $countOrders = Order::where('user_id', Auth::User()->getAuthIdentifier())->count();
+            $data['countOrders'] = $countOrders;
+        }
         $categories = Category::all();
         $data['categories'] = $categories;
         $last_articles = Article::orderBy('id', 'desc')->take(3)->get();

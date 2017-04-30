@@ -8,7 +8,7 @@
                     <div class="panel-heading"><h3>Категории</h3></div>
                     <div><a href="/admin/categories/create" class="btn btn-primary">Создать</a></div>
                     <div class="panel-body">
-                        <table border="1">
+                        <table class="table table-bordered">
                         @foreach($categories as $category)
                         <tr>
                             <td><a href="/admin/categories/show/{{$category->id}}">{{$category->name}}</a></td>
