@@ -7,22 +7,22 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Редактировать категорию</div>
                     @foreach($errors->all() as $err)
-                        <li>{{$err}}</li>
+                        <li class="alert alert-danger">{{$err}}</li>
                     @endforeach
                     <div class="panel-body">
+                        <a href="/admin/categories"><< Назад</a>
                         <form action="/admin/categories/update/{{$category->id}}" method="post">
                             {{csrf_field()}}
                             <label for="name" class="input-group">
                                 Название:
-                                <input type="text" name="name" value="{{$category->name}}">
+                                <textarea name="title" cols="100" rows="1">{{$category->name}}</textarea>
                             </label>
                             <label for="description" class="input-group">
                                 Описание:
-                                <textarea name="description" cols="30" rows="10">{{$category->description}}</textarea>
+                                <textarea name="description" cols="100" rows="10">{{$category->description}}</textarea>
                             </label>
                             <input type="submit" class="btn" value="Сохранить">
                         </form>
-                        <a href="/admin/categories" class="btn">Вернуться к списку</a>
                     </div>
                 </div>
             </div>

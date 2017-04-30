@@ -7,15 +7,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Создать статью</div>
                     @foreach($errors->all() as $err)
-                        <li>{{$err}}</li>
+                        <li class="alert alert-danger">{{$err}}</li>
                     @endforeach
                     <div class="panel-body">
+                        <a href="/admin/articles"><< Назад</a>
                         <form action="/admin/articles/store" method="post" enctype="multipart/form-data">
                             {{csrf_field()}}
-                            <label for="photo" class="input-group">
-                                Фото:
-                                <input type="file" name="photo">
-                            </label>
                             <label for="title" class="input-group">
                                 Название:
                                 <textarea name="title" cols="100" rows="1">{{old('title')}}</textarea>
@@ -23,6 +20,10 @@
                              <label for="text" class="input-group">
                                 Содержание:
                                 <textarea name="text" cols="100" rows="10">{{old('text')}}</textarea>
+                            </label>
+                            <label for="photo" class="input-group">
+                                Фото:
+                                <input type="file" name="photo">
                             </label>
                             <input type="submit" class="btn" value="Сохранить">
                         </form>

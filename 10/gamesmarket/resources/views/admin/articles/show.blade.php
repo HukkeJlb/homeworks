@@ -8,6 +8,7 @@
                     <div class="panel-heading">Статья</div>
                     <div></div>
                     <div class="panel-body">
+                        <a href="/admin/articles"><< Назад</a>
                         <p><b>Фото:</b></p>
                         <img src="/img/news/{{$article->photo}}" style="max-width: 200px;max-height: 200px;"/>
                         <p><b>Название:</b></p>

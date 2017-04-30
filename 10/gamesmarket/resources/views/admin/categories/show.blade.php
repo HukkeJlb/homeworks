@@ -7,6 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Категория</div>
                     <div class="panel-body">
+                        <a href="/admin/categories"><< Назад</a>
                         <p>Название:</p>
                         <p>{{$category->name}}</p>
                         <p>Описание:</p>
