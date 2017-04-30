@@ -12,9 +12,9 @@
                 </div>
                 <div class="content-head__search-block">
                     <div class="search-container">
-                        <form class="search-container__form" action="/search" method="post">
-                            {{csrf_field()}}
+                        <form class="search-container__form" action="/search" method="get">
                             <input type="text" class="search-container__form__input" name="keyword">
+                            {{csrf_field()}}
                             <button type="submit" class="search-container__form__btn">Поиск по товарам</button>
                         </form>
                     </div>

@@ -19,7 +19,7 @@ Route::get('/about', 'FrontController@about');
 Route::get('/news', 'FrontController@news');
 Route::get('/article/{id}', 'FrontController@article');
 Route::get('/category/{id}', 'FrontController@category');
-Route::post('/search', 'FrontController@search');
+Route::get('/search', 'FrontController@search');
 
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin', function () {
