@@ -20,7 +20,7 @@ if ($randomCase == 1) {
         'Weapons' => $jsonArray['Weapons'] = ['AK-74', 'Pistol TT', 'Dragunov`s Sniper Rifle'],
         'Ships' => ['100 Battleships', '5 Aircraft Carries'],
         'Human Resources' => ['100k - Doctors', '250k Engineers', '1500000 Soldiers']
-    ];
+    ]; 
 } else {
     $newArray = $jsonArray;
 }
@@ -30,29 +30,29 @@ $arr2 = json_decode(file_get_contents('./output2.json'), true);
 if ($arr1 != $arr2) {
     echo "Были внесены следующие изменения:<br>";
     if ($arr1['Weapons'] != $arr2['Weapons']) {
-        $compare1 = array_diff_assoc($arr2['Weapons'], $arr1['Weapons']);
-        foreach ($compare1 as $key => $value) {
-            echo 'В элемент Weapons[' .$key. '] - внесено значение '.$value.' <br>';
-        }
+            $compare1 = array_diff_assoc($arr2['Weapons'], $arr1['Weapons']);
+            foreach ($compare1 as $key => $value) {
+                echo 'В элемент Weapons[' . $key . '] - внесено значение ' . $value . ' <br>';
+            }
     }
     if ($arr1['Vehicles'] != $arr2['Vehicles']) {
         $compare2 = array_diff_assoc($arr2['Vehicles'], $arr1['Vehicles']);
         foreach ($compare2 as $key => $value) {
-            echo 'В элемент Vehicles[' .$key. '] - внесено значение '.$value.' <br>';
+            echo 'В элемент Vehicles[' . $key . '] - внесено значение ' . $value . ' <br>';
         }
     }
     if ($arr1['Ships'] != $arr2['Ships']) {
         $compare1 = array_diff_assoc($arr2['Ships'], $arr1['Ships']);
         foreach ($compare1 as $key => $value) {
-            echo 'В элемент Ships[' .$key. '] - внесено значение '.$value.' <br>';
+            echo 'В элемент Ships[' . $key . '] - внесено значение ' . $value . ' <br>';
         }
     }
     if ($arr1['Human Resources'] != $arr2['Human Resources']) {
         $compare1 = array_diff_assoc($arr2['Human Resources'], $arr1['Human Resources']);
         foreach ($compare1 as $key => $value) {
-            echo 'В элемент Human Resources[' .$key. '] - внесено значение '.$value.' <br>';
+            echo 'В элемент Human Resources[' . $key . '] - внесено значение ' . $value . ' <br>';
         }
     }
 } else {
-        echo "Изменений в данных нет";
+    echo "Изменений в данных нет";
 }
